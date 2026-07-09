@@ -4,10 +4,127 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
+
 }
 
 datasource db {
   provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  role         UserRole @default(USER)
+  email        String   @unique
+  password     String
+  profileImage String?
+  bio          String?
+
+  playlists Playlist[] @relation("UserPlaylists")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Song {
+  id            String    @id @default(cuid())
+  musicBrainzId String    @unique
+  title         String
+  slug          String    @unique
+  coverImage    String?
+  duration      Int
+  trackNumber   Int
+  releaseDate   DateTime?
+
+  artists   Artist[]
+  albums    Album[]
+  genres    Genre[]
+  playlists Playlist[]
+}
+
+model Playlist {
+  id          String             @id @default(cuid())
+  title       String
+  slug        String             @unique
+  description String?
+  coverImage  String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  creatorId   String
+  visibility  PlaylistVisibility
+  creator     User               @relation("UserPlaylists", fields: [creatorId], references: [id])
+
+  songs  Song[]
+  genres Genre[]
+}
+
+model Genre {
+  id            String     @id @default(cuid())
+  name          String     @unique
+  slug          String     @unique
+  genreImage    String?
+  description   String?
+  artists       Artist[]   @relation("ArtistGenres")
+  primaryArtist Artist[]   @relation("PrimaryGenre")
+  songs         Song[]
+  albums        Album[]
+  playlists     Playlist[]
+}
+
+model Album {
+  id            String    @id @default(cuid())
+  musicBrainzId String    @unique
+  title         String
+  slug          String    @unique
+  coverImage    String?
+  releaseDate   DateTime?
+  albumType     AlbumType
+
+  artists Artist[]
+  songs   Song[]
+  genres  Genre[]
+}
+
+model Artist {
+  id             String     @id @default(cuid())
+  musicBrainzId  String     @unique
+  name           String
+  slug           String     @unique
+  profileImage   String?
+  bannerImage    String?
+  country        String?
+  type           ArtistType
+  primaryGenreId String?
+  primaryGenre   Genre?     @relation("PrimaryGenre", fields: [primaryGenreId], references: [id])
+  genres         Genre[]    @relation("ArtistGenres")
+
+  songs  Song[]
+  albums Album[]
+}
+
+enum AlbumType {
+  ALBUM
+  EP
+  SINGLE
+  COMPILATION
+  LIVE
+}
+
+enum ArtistType {
+  SOLO
+  BAND
+  ORCHESTRA
+  CHOIR
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum PlaylistVisibility {
+  PUBLIC
+  PRIVATE
+  UNLISTED
 }

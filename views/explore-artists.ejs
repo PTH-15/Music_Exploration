@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Artists · Music Exploration</title>
+    <link rel="stylesheet" href="/landing.css">
+    <link rel="stylesheet" href="/explore-artists.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">Music<span>Exploration</span></div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="/">Home</a>
+                <a href="/explore-artists" class="active">Explore</a>
+                <a href="">Playlists</a>
+                <a href="">Genres</a>
+                <a href="">Artist</a>
+                <a href="">About</a>
+            </div>
+
+            <div class="nav-search">
+                <input class="input" id="searchInput" name="text" placeholder="Search artists, genres, playlists..." type="search">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+
+            <div class="nav-auth">
+                <a href="" class="btn-ghost">Log in</a>
+                <a href="" class="btn-solid">Sign up</a>
+            </div>
+        </nav>
+
+        <main class="explore-main">
+
+            <section class="explore-hero">
+                <span class="eyebrow">EXPLORE</span>
+                <h1>Every artist, <span>one place.</span></h1>
+                <p class="explore-sub">Browse the full catalog, filter by genre, and sort by what's trending right now.</p>
+            </section>
+
+            <section class="explore-controls">
+                <div class="search-panel-field explore-search-field">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <input class="input" id="artistSearchInput" name="text" placeholder="Search artists..." type="search">
+                </div>
+
+                <div class="explore-filters">
+                    <div class="search-chips" id="genreFilters">
+                        <button class="chip is-active" data-genre="all">All Genres</button>
+                        <button class="chip" data-genre="hip-hop">Hip-Hop</button>
+                        <button class="chip" data-genre="pop">Pop</button>
+                        <button class="chip" data-genre="punjabi">Punjabi</button>
+                        <button class="chip" data-genre="rock">Rock</button>
+                        <button class="chip" data-genre="lo-fi">Lo-fi</button>
+                        <button class="chip" data-genre="rnb">R&amp;B</button>
+                        <button class="chip" data-genre="classical">Classical</button>
+                        <button class="chip" data-genre="indie">Indie</button>
+                    </div>
+
+                    <select class="sort-select" id="sortSelect">
+                        <option value="trending">Sort: Trending</option>
+                        <option value="az">Sort: A–Z</option>
+                        <option value="albums">Sort: Most Albums</option>
+                        <option value="songs">Sort: Most Songs</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="explore-results">
+                <div class="explore-count">
+                    <span id="resultCount">0</span> artists
+                </div>
+
+                <div class="artist-grid" id="artistGrid">
+                    <!-- Cards are rendered here by script.js from the ARTISTS array below.
+                         Once you have a real backend route (e.g. GET /api/artists),
+                         swap the ARTISTS array for a fetch() call. -->
+                </div>
+
+                <div class="empty-state" id="emptyState" hidden>
+                    <span class="empty-icon">🔍</span>
+                    <p>No artists match your search. Try a different genre or keyword.</p>
+                </div>
+
+                <button class="btn-outline load-more" id="loadMoreBtn">Load More</button>
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            <div class="footer-section">
+                <h4>Music<span>Exploration</span></h4>
+                <p>Your gateway to discover music. Find artists, genres and playlists beyond the algorithm.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Developer</h4>
+                <a href="" class="links">Github</a>
+                <a href="" class="links">LinkedIn</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="" class="links">About</a>
+                <a href="" class="links">Contact</a>
+                <a href="" class="links">Privacy Policy</a>
+            </div>
+        </footer>
+        <hr>
+        <div class="footer-credit">
+            © 2026 Music Exploration • Built by Prathmesh (PTH)
+        </div>
+    </div>
+
+    <script src="/script.js"></script>
+    <script src="/explore-artists.js"></script>
+</body>
+
+</html>

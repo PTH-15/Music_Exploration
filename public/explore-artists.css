@@ -1,0 +1,145 @@
+/* ---------- Explore Artists page ---------- */
+/* Reuses the CSS variables (--ink, --accent, --radius-*, etc.)
+   already defined in landing.css :root — load landing.css first. */
+
+.explore-main{
+  max-width:1280px;
+  margin:0 auto;
+  padding:0 40px 80px;
+}
+
+/* Hero */
+.explore-hero{
+  padding:56px 0 32px;
+  max-width:640px;
+}
+.explore-hero h1{
+  font-size:clamp(2rem,3.6vw,3rem);
+  line-height:1.1;
+  font-weight:700;
+  color:var(--ink);
+  margin-top:16px;
+}
+.explore-hero h1 span{color:var(--accent);}
+.explore-sub{
+  margin-top:16px;
+  font-size:1.02rem;
+  line-height:1.6;
+  color:var(--ink-soft);
+}
+
+/* Controls */
+.explore-controls{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  background:rgba(255,255,255,.55);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  padding:22px;
+  margin-bottom:36px;
+}
+.explore-search-field .input{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  color:var(--ink);
+  padding:14px 18px 14px 44px;
+  font-size:.95rem;
+}
+.explore-search-field{position:relative;}
+.explore-search-field .search-icon{left:16px; right:auto; color:var(--ink-soft);}
+
+.explore-filters{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.sort-select{
+  border:1px solid var(--line);
+  background:var(--paper-card);
+  color:var(--ink);
+  font-size:.85rem;
+  font-weight:600;
+  padding:10px 14px;
+  border-radius:999px;
+  cursor:pointer;
+}
+
+/* Results */
+.explore-count{
+  font-size:.88rem;
+  font-weight:600;
+  color:var(--ink-soft);
+  margin-bottom:18px;
+}
+.explore-count span{color:var(--ink); font-weight:700;}
+
+.artist-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
+  gap:18px;
+}
+
+/* Individual card — same visual language as .artist-card in the carousel,
+   but sized for a grid instead of a horizontal scroller */
+.explore-artist-card{
+  height:230px;
+  border-radius:var(--radius-md);
+  background-image:var(--img);
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-end;
+  padding:16px;
+  transition:transform .2s ease;
+  cursor:pointer;
+}
+.explore-artist-card::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.75), transparent 55%);
+}
+.explore-artist-card:hover{transform:translateY(-4px);}
+.explore-artist-card .artist-name,
+.explore-artist-card .artist-meta,
+.explore-artist-card .artist-genre-tag{position:relative; z-index:1; display:block; color:#fff;}
+.explore-artist-card .artist-name{font-weight:700; font-size:1.02rem;}
+.explore-artist-card .artist-meta{font-size:.76rem; color:rgba(255,255,255,.75); margin-top:2px;}
+.explore-artist-card .artist-genre-tag{
+  position:absolute; top:14px; left:14px; z-index:1;
+  font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+  background:rgba(0,0,0,.45);
+  padding:4px 10px;
+  border-radius:999px;
+  color:#fff;
+}
+
+/* Empty state */
+.empty-state{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  padding:60px 20px;
+  text-align:center;
+  color:var(--ink-soft);
+}
+.empty-icon{font-size:2rem;}
+
+/* Load more */
+.load-more{
+  display:block;
+  margin:36px auto 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:860px){
+  .explore-main{padding:0 22px 60px;}
+  .explore-hero{padding:36px 0 24px;}
+  .explore-controls{padding:16px;}
+  .explore-filters{flex-direction:column; align-items:stretch;}
+  .sort-select{width:100%;}
+  .artist-grid{grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));}
+}
