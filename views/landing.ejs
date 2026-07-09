@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Exploration</title>
+    <link rel="stylesheet" href="/landing.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">Music<span>Exploration</span></div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="" class="active">Home</a>
+                <a href="">Explore</a>
+                <a href="">Playlists</a>
+                <a href="">Genres</a>
+                <a href="">Artist</a>
+                <a href="">About</a>
+            </div>
+
+            <div class="nav-search">
+                <input class="input" id="searchInput" name="text" placeholder="Search artists, genres, playlists..." type="search">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+
+            <div class="nav-auth">
+                <a href="" class="btn-ghost">Log in</a>
+                <a href="" class="btn-solid">Sign up</a>
+            </div>
+        </nav>
+
+        <main class="page-grid">
+
+            <section class="hero">
+                <span class="eyebrow">DISCOVER · EXPLORE · CONNECT</span>
+                <h1>Find your next favorite<br>sound, <span>off the algorithm.</span></h1>
+                <p class="hero-sub">Dig into artists, albums, genres and curated playlists — plus the
+                    stories behind the music you love.</p>
+
+                <div class="hero-cta">
+                    <a href="" class="btn-solid btn-lg">Explore Artists <span class="arrow">→</span></a>
+                    <a href="" class="btn-outline btn-lg">Browse Genres</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-icon">🎧</span>
+                        <div><strong>10,000+</strong><small>Artists</small></div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">🎵</span>
+                        <div><strong>50+</strong><small>Genres</small></div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">📻</span>
+                        <div><strong>100+</strong><small>Playlists</small></div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content">
+
+                <section class="section-block search-section">
+                    <div class="section-head">
+                        <h2>Search Music Exploration</h2>
+                    </div>
+                    <div class="search-panel">
+                        <div class="search-panel-field">
+                            <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            <input class="input" id="pageSearchInput" name="text" placeholder="Search artists, albums, songs or playlists..." type="search">
+                        </div>
+                        <div class="search-chips">
+                            <button class="chip is-active" data-filter="all">All</button>
+                            <button class="chip" data-filter="artists">Artists</button>
+                            <button class="chip" data-filter="albums">Albums</button>
+                            <button class="chip" data-filter="songs">Songs</button>
+                            <button class="chip" data-filter="playlists">Playlists</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section-block">
+                    <div class="section-head">
+                        <h2>Featured Artists</h2>
+                        <a href="" class="view-all">View All →</a>
+                    </div>
+                    <div class="carousel-wrap">
+                        <div class="carousel" id="artistCarousel">
+                            <a href="" class="artist-card" style="--img: linear-gradient(160deg,#3a2a1e,#12100e)">
+                                <span class="artist-name">Kr$na</span>
+                                <span class="artist-meta">45 Albums · 120 Songs</span>
+                            </a>
+                            <a href="" class="artist-card" style="--img: linear-gradient(160deg,#2a2320,#0f0d0c)">
+                                <span class="artist-name">Seedhe Maut</span>
+                                <span class="artist-meta">30 Albums · 88 Songs</span>
+                            </a>
+                            <a href="" class="artist-card" style="--img: linear-gradient(160deg,#241d2e,#0e0c12)">
+                                <span class="artist-name">Raga</span>
+                                <span class="artist-meta">25 Albums · 64 Songs</span>
+                            </a>
+                            <a href="" class="artist-card" style="--img: linear-gradient(160deg,#2c1720,#100a0d)">
+                                <span class="artist-name">Karma</span>
+                                <span class="artist-meta">60 Albums · 250 Songs</span>
+                            </a>
+                            <a href="" class="artist-card" style="--img: linear-gradient(160deg,#1e2622,#0b0f0d)">
+                                <span class="artist-name">King</span>
+                                <span class="artist-meta">20 Albums · 70 Songs</span>
+                            </a>
+                            <a href="" class="artist-card" style="--img: linear-gradient(160deg,#242020,#0d0b0b)">
+                                <span class="artist-name">Bhaskar</span>
+                                <span class="artist-meta">35 Albums · 120 Songs</span>
+                            </a>
+                            <a href="" class="artist-card" style="--img: linear-gradient(160deg,#242020,#0d0b0b)">
+                                <span class="artist-name">Rafatar</span>
+                                <span class="artist-meta">35 Albums · 120 Songs</span>
+                            </a>
+                            <a href="" class="artist-card" style="--img: linear-gradient(160deg,#242020,#0d0b0b)">
+                                <span class="artist-name">Weekend</span>
+                                <span class="artist-meta">35 Albums · 120 Songs</span>
+                            </a>
+                            <a href="" class="artist-card" style="--img: linear-gradient(160deg,#242020,#0d0b0b)">
+                                <span class="artist-name">Talha yunus</span>
+                                <span class="artist-meta">35 Albums · 120 Songs</span>
+                            </a>
+                            <a href="" class="artist-card" style="--img: linear-gradient(160deg,#242020,#0d0b0b)">
+                                <span class="artist-name">Encore ABJ</span>
+                                <span class="artist-meta">35 Albums · 120 Songs</span>
+                            </a>
+                        </div>
+                        <!-- <button class="carousel-btn" id="carouselNext" aria-label="Next artists">›</button> -->
+                    </div>
+                </section>
+
+                <section class="section-block">
+                    <div class="section-head">
+                        <h2>Browse Genres</h2>
+                        <a href="" class="view-all">View All →</a>
+                    </div>
+                    <div class="genre-grid">
+                        <a href="" class="genre-chip" data-tone="a">🎤 <span>Hip-Hop</span></a>
+                        <a href="" class="genre-chip" data-tone="b">⭐ <span>Pop</span></a>
+                        <a href="" class="genre-chip" data-tone="c">📡 <span>Punjabi</span></a>
+                        <a href="" class="genre-chip" data-tone="d">🎸 <span>Rock</span></a>
+                        <a href="" class="genre-chip" data-tone="e">🎧 <span>Lo-fi</span></a>
+                        <a href="" class="genre-chip" data-tone="f">❤ <span>R&amp;B</span></a>
+                        <a href="" class="genre-chip" data-tone="g">🎻 <span>Classical</span></a>
+                        <a href="" class="genre-chip" data-tone="h">🎶 <span>Indie</span></a>
+                    </div>
+                </section>
+
+                <section class="section-block" id="learning-playlists">
+                    <!-- <div class="section-head">
+                        <h2>Learning Playlists</h2>
+                        <span class="section-sub">Curated by level, not by algorithm</span>
+                    </div>
+                    <div class="journey-grid">
+                        <a href="" class="journey-card" data-tone="green">
+                            <span class="journey-icon">🎧</span>
+                            <h3>Beginner</h3>
+                            <p>New to a artist? Start with the essentials — 20 tracks, no deep cuts.</p>
+                            <span class="journey-arrow">→</span>
+                        </a>
+                        <a href="" class="journey-card" data-tone="amber">
+                            <span class="journey-icon">🎵</span>
+                            <h3>Intermediate</h3>
+                            <p>Know the basics? Level up with artists just outside the mainstream.</p>
+                            <span class="journey-arrow">→</span>
+                        </a>
+                        <a href="" class="journey-card" data-tone="purple">
+                            <span class="journey-icon">★</span>
+                            <h3>Advanced</h3>
+                            <p>Deep cuts, underground gems and the artists shaping what's next.</p>
+                            <span class="journey-arrow">→</span>
+                        </a>
+                    </div> -->
+                    <div class="side-card">
+                        <h3 class="side-card-title">Learning Playlists</h3>
+                            <ul class="feature-list">
+                                <li>
+                                    <span class="feature-icon">🎧</span>
+                                    <div>
+                                        <strong>Beginner</strong>
+                                        <p>New to a artist? Start with the essentials — 20 tracks, no deep cuts</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="feature-icon">🎵</span>
+                                    <div>
+                                        <strong>Intermediate</strong>
+                                        <p>Know the basics? Level up with artists just outside the mainstream</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="feature-icon">★</span>
+                                    <div>
+                                        <strong>Advanced</strong>
+                                        <p>Deep cuts, underground gems and the artists shaping what's next</p>
+                                    </div>
+                                </li>
+                    </div>
+                </section>
+
+            </div>
+
+            <aside class="right" id="discover-sidebar">
+                <div class="sidebar-inner">
+
+                    <div class="side-card">
+                        <h3 class="side-card-title">🔥 Trending Today</h3>
+                        <ol class="trend-list">
+                            <li><a href=""><span class="trend-rank">01</span>KR$NA</a></li>
+                            <li><a href=""><span class="trend-rank">02</span>Seedhe Maut</a></li>
+                            <li><a href=""><span class="trend-rank">03</span>Bhaskar</a></li>
+                            <li><a href=""><span class="trend-rank">04</span>Weekend</a></li>
+                            <li><a href=""><span class="trend-rank">05</span>Lana dey rey</a></li>
+                        </ol>
+                    </div>
+
+                    <div class="side-card spotlight-card">
+                        <h3 class="side-card-title">⭐ Artist Spotlight</h3>
+                        <div class="spotlight-media" style="--img: linear-gradient(160deg,#3a2a1e,#12100e)"></div>
+                        <div class="spotlight-body">
+                            <span class="spotlight-name">Seedhe Maut</span>
+                            <span class="spotlight-genre">Hip-Hop / Rap</span>
+                            <a href="" class="btn-solid btn-sm">Explore Artist <span class="arrow">→</span></a>
+                        </div>
+                    </div>
+
+                    <div class="side-card playlist-card">
+                        <h3 class="side-card-title">🎧 Playlist of the Day</h3>
+                        <div class="playlist-body">
+                            <strong class="playlist-title">Hip-Hop Essentials</strong>
+                            <div class="playlist-meta">
+                                <span>20 Songs</span>
+                                <span class="dot">•</span>
+                                <span>Beginner Friendly</span>
+                            </div>
+                            <a href="" class="btn-outline btn-sm">Open Playlist</a>
+                        </div>
+                    </div>
+
+                    <div class="side-card">
+                        <h3 class="side-card-title">🚀 Platform Features</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <span class="feature-icon">🎤</span>
+                                <div>
+                                    <strong>Artist Explorer</strong>
+                                    <p>Complete profiles with biography, discography and similar artists.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="feature-icon">🎼</span>
+                                <div>
+                                    <strong>Genre Discovery</strong>
+                                    <p>Browse music by genre and discover new sounds.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="feature-icon">🎧</span>
+                                <div>
+                                    <strong>Artist Learning Paths</strong>
+                                    <p>Follow Beginner, Intermediate and Advanced playlists curated specifically for every artist..</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="feature-icon">🔎</span>
+                                <div>
+                                    <strong>Smart Search</strong>
+                                    <p>Quickly search artists, albums and songs.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="feature-icon">▶</span>
+                                <div>
+                                    <strong>Spotify Preview</strong>
+                                    <p>Listen to song previews directly inside Music Exploration.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="side-card stats-card">
+                        <h3 class="side-card-title">📊 Music Exploration Stats</h3>
+                        <div class="stats-row">
+                            <div class="stats-item">
+                                <strong data-count="10000">0</strong>
+                                <small>Artists</small>
+                            </div>
+                            <div class="stats-item">
+                                <strong data-count="50">0</strong>
+                                <small>Genres</small>
+                            </div>
+                            <div class="stats-item">
+                                <strong data-count="100">0</strong>
+                                <small>Curated Playlists</small>
+                            </div>
+                        </div>
+                        <p class="stats-tag">📈 Growing Every Day</p>
+                    </div>
+
+                </div>
+            </aside>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-section">
+                <h4>Music<span>Exploration</span></h4>
+                <p>Your gateway to discover music. Find artists, genres and playlists beyond the algorithm.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Developer</h4>
+                <a href="" class="links">Github</a>
+                <a href="" class="links">LinkedIn</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="" class="links">About</a>
+                <a href="" class="links">Contact</a>
+                <a href="" class="links">Privacy Policy</a>
+            </div>
+        </footer>
+        <hr>
+        <div class="footer-credit">
+            © 2026 Music Exploration • Built by Prathmesh (PTH)
+        </div>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+
+</html>
