@@ -9,22 +9,24 @@ const genreRoute = require('./routes/genreRoutes')
 const albumRoute = require('./routes/albumRoute')
 const songRoute = require('./routes/songRoute')
 const playlistRoute = require('./routes/playlistRoute')
+const { renderExploreArtists, renderArtistPage, renderAlbumPage } = require("./controllers/pageController");
+
 
 app.set('view engine','ejs')
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use("/api/artists", artistRoutes)
 app.use('/api/genres',genreRoute)
-app.use('/api/genres',albumRoute)
-app.use('/api/genres',songRoute)
-app.use('/api/genres',playlistRoute)
+app.use('/api/albums',albumRoute)
+app.use('/api/songs',songRoute)
+app.use('/api/playlists',playlistRoute)
 app.use(express.static(path.join(__dirname, 'public')))
 app.get('/',(req,res)=>{
     res.render('landing')
 })
-app.get('/Explore-artists', (req, res) => {
-  res.render('Explore-artists');
-});
+app.get("/explore-artists", renderExploreArtists)
+app.get("/artist/:slug", renderArtistPage)
+app.get("/album/:slug", renderAlbumPage)
 
 const errorMiddleware = require('./middleware/errorMiddleware')
 app.use(errorMiddleware)

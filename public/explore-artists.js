@@ -8,21 +8,23 @@
 //   applyFilters();
 // });
 
-const ARTISTS = [
-  { name: "Kr$na",        genre: "hip-hop",  albums: 45, songs: 120, gradient: "linear-gradient(160deg,#3a2a1e,#12100e)" },
-  { name: "Seedhe Maut",  genre: "hip-hop",  albums: 30, songs: 88,  gradient: "linear-gradient(160deg,#2a2320,#0f0d0c)" },
-  { name: "Raga",         genre: "indie",    albums: 25, songs: 64,  gradient: "linear-gradient(160deg,#241d2e,#0e0c12)" },
-  { name: "Karma",        genre: "hip-hop",  albums: 60, songs: 250, gradient: "linear-gradient(160deg,#2c1720,#100a0d)" },
-  { name: "King",         genre: "pop",      albums: 20, songs: 70,  gradient: "linear-gradient(160deg,#1e2622,#0b0f0d)" },
-  { name: "Bhaskar",      genre: "lo-fi",    albums: 35, songs: 120, gradient: "linear-gradient(160deg,#242020,#0d0b0b)" },
-  { name: "Rafatar",      genre: "hip-hop",  albums: 35, songs: 120, gradient: "linear-gradient(160deg,#242020,#0d0b0b)" },
-  { name: "Weekend",      genre: "pop",      albums: 35, songs: 120, gradient: "linear-gradient(160deg,#242020,#0d0b0b)" },
-  { name: "Talha Yunus",  genre: "punjabi",  albums: 35, songs: 120, gradient: "linear-gradient(160deg,#242020,#0d0b0b)" },
-  { name: "Encore ABJ",   genre: "rnb",      albums: 35, songs: 120, gradient: "linear-gradient(160deg,#242020,#0d0b0b)" },
-  { name: "Lana Dey Rey", genre: "pop",      albums: 12, songs: 55,  gradient: "linear-gradient(160deg,#3a2a1e,#12100e)" },
-  { name: "Prateek Kuhad",genre: "indie",    albums: 8,  songs: 40,  gradient: "linear-gradient(160deg,#241d2e,#0e0c12)" }
-];
+let ARTISTS = [];
 
+async function loadArtists() {
+    try {
+        const response = await fetch("/api/artists");
+        console.log(response);
+        
+        ARTISTS = await response.json();
+        console.log(Array.isArray(ARTISTS));
+        
+        console.log(ARTISTS);
+        
+        render();
+    } catch (error) {
+        console.error(error);
+    }
+}
 // ---------- State ----------
 let state = {
   query: "",
@@ -45,35 +47,38 @@ const navSearchInput    = document.getElementById('searchInput');
 
 // ---------- Render ----------
 function getFilteredArtists() {
-  let list = ARTISTS.filter(a => {
-    const matchesQuery = !state.query || a.name.toLowerCase().includes(state.query);
-    const matchesGenre = state.genre === 'all' || a.genre === state.genre;
-    return matchesQuery && matchesGenre;
-  });
 
-  if (state.sort === 'az') {
-    list = list.slice().sort((a, b) => a.name.localeCompare(b.name));
-  } else if (state.sort === 'albums') {
-    list = list.slice().sort((a, b) => b.albums - a.albums);
-  } else if (state.sort === 'songs') {
-    list = list.slice().sort((a, b) => b.songs - a.songs);
-  }
-  // 'trending' just keeps original order
+    let list = ARTISTS.filter(a => {
+        return !state.query || a.name.toLowerCase().includes(state.query);
+    });
 
-  return list;
+    if (state.sort === "az") {
+        list = list.slice().sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    return list;
 }
 
 function renderCard(artist) {
-  const card = document.createElement('a');
-  card.href = '';
-  card.className = 'explore-artist-card';
-  card.style.setProperty('--img', artist.gradient);
-  card.innerHTML = `
-    <span class="artist-genre-tag">${artist.genre.replace('-', ' ')}</span>
-    <span class="artist-name">${artist.name}</span>
-    <span class="artist-meta">${artist.albums} Albums · ${artist.songs} Songs</span>
-  `;
-  return card;
+
+    const card = document.createElement("a");
+
+    card.href = `/artist/${artist.slug}`;
+
+    card.className = "explore-artist-card";
+
+    card.innerHTML = `
+        <div class="artist-image">
+            <img src="${artist.profileImage}" alt="${artist.name}">
+        </div>
+
+        <span class="artist-name">${artist.name}</span>
+
+        <span class="artist-meta">
+            ${artist.country || "Unknown"} • ${artist.type}
+        </span>
+    `;
+    return card;
 }
 
 function render() {
@@ -135,4 +140,4 @@ if (loadMoreBtn) {
 }
 
 // ---------- Init ----------
-render();
+loadArtists();

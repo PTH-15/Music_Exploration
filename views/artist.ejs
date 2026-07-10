@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= artist.name %> | Music Exploration
+    </title>
+
+    <link rel="stylesheet" href="/landing.css">
+    <link rel="stylesheet" href="/artist.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Music<span>Exploration</span></div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/explore-artists">Explore</a>
+        </div>
+    </nav>
+
+    <section class="banner">
+        <img src="<%= artist.bannerImage %>" alt="<%= artist.name %>">
+    </section>
+
+    <div class="artist-content">
+
+        <section class="artist-profile">
+
+            <img class="profile-image" src="<%= artist.profileImage %>" alt="<%= artist.name %>"
+                onerror="this.src='/images/default-artist.png'">
+
+            <div class="artist-info">
+                <h1>
+                    <%= artist.name %>
+                </h1>
+                <p>
+                    <%= artist.country %> • <%= artist.type %>
+                </p>
+            </div>
+
+        </section>
+
+        <section class="about">
+            <h2>About</h2>
+            <p>Artist biography coming soon...</p>
+        </section>
+
+        <section class="albums">
+            <h2>Albums</h2>
+            <% if (artist.albums.length===0) { %>
+                <p>No albums available.</p>
+                <% } else { %>
+                    <div class="album-grid">
+                        <% artist.albums.forEach(album=> { %>
+                            <div class="album-card">
+                                <img src="<%= album.coverImage %>" alt="<%= album.title %>">
+                                <a href="/album/<%= album.slug %>">
+                                    <h3><%= album.title %></h3>
+                                </a>
+                            </div>
+                            <% }) %>
+                    </div>
+                    <% } %>
+        </section>
+        <section class="playlists">
+            <h2>Playlists</h2>
+
+            <div class="playlist-grid">
+
+                <div class="playlist-card beginner">
+                    <div class="playlist-label">Beginner</div>
+                    <p>Easy listening to start with <%= artist.name %>
+                    </p>
+                </div>
+
+                <div class="playlist-card intermediate">
+                    <div class="playlist-label">Intermediate</div>
+                    <p>Deeper cuts once you know the basics</p>
+                </div>
+
+                <div class="playlist-card advance">
+                    <div class="playlist-label">Advance</div>
+                    <p>For the true fans and deep listeners</p>
+                </div>
+
+            </div>
+        </section>
+        <section class="songs">
+            <h2>Songs</h2>
+            <div class="empty-state">No songs yet.</div>
+        </section>
+
+    </div>
+
+    <script src="/artist.js"></script>
+
+</body>
+
+</html>

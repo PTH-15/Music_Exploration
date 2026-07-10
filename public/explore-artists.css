@@ -27,7 +27,10 @@
   line-height:1.6;
   color:var(--ink-soft);
 }
-
+.artist-image{
+  position: absolute;
+  inset: 0;
+}
 /* Controls */
 .explore-controls{
   display:flex;
@@ -95,11 +98,14 @@
   padding:16px;
   transition:transform .2s ease;
   cursor:pointer;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .explore-artist-card::after{
   content:"";
   position:absolute; inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.75), transparent 55%);
+  background:linear-gradient(to top, rgba(0,0,0,.85),rgba(0,0,0,.2) transparent);z-index: 1;
 }
 .explore-artist-card:hover{transform:translateY(-4px);}
 .explore-artist-card .artist-name,

@@ -43,7 +43,9 @@ const createSong = async (req, res, next) => {
             coverImage,
             duration,
             trackNumber,
-            releaseDate
+            releaseDate,
+            artistId,
+            albumId
         } = req.body;
 
         const existingSong = await prisma.song.findUnique({
@@ -57,7 +59,18 @@ const createSong = async (req, res, next) => {
                 message: "Song already exists"
             });
         }
-
+        const existingArtist = await prisma.artist.findUnique({where:{id:artistId}})
+        if(!existingArtist){
+            return res.status(409).json({
+                message: "Artist not found"
+            });
+        }
+        const existingAblum = await prisma.album.findUnique({where:{id:albumId}})
+        if(!existingAblum){
+            return res.status(409).json({
+                message: "Album not found"
+            });
+        }
         const song = await prisma.song.create({
             data: {
                 musicBrainzId,
@@ -66,7 +79,9 @@ const createSong = async (req, res, next) => {
                 coverImage,
                 duration,
                 trackNumber,
-                releaseDate
+                releaseDate,
+                artists:{connect:[{id:artistId}]},
+                albums:{connect:[{id:albumId}]}
             }
         });
 

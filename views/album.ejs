@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= album.title %> | Music Exploration</title>
+
+    <link rel="stylesheet" href="/landing.css">
+    <link rel="stylesheet" href="/album.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Music<span>Exploration</span></div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/explore-artists">Explore</a>
+        </div>
+    </nav>
+
+    <div class="album-content">
+
+        <section class="album-header">
+
+            <img
+                class="album-cover"
+                src="<%= album.coverImage %>"
+                alt="<%= album.title %>"
+                onerror="this.src='/images/default-album.png'"
+            >
+
+            <div class="album-info">
+
+                <p class="album-type">Album</p>
+
+                <h1><%= album.title %></h1>
+
+                <p class="album-meta">
+
+                    <a href="/artist/<%= album.artists[0].slug %>">
+                        <%= album.artists.map(artist => artist.name).join(", ") %>
+                    </a>
+
+                    •
+
+                    <%= album.releaseDate
+                        ? new Date(album.releaseDate).getFullYear()
+                        : "Unknown" %>
+
+                    •
+
+                    <%= album.genres.length
+                        ? album.genres.map(g => g.name).join(", ")
+                        : "Unknown" %>
+
+                    •
+
+                    <%= album.songs.length %> Songs
+
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="tracklist">
+
+            <h2>Tracks</h2>
+
+            <% if (album.songs.length > 0) { %>
+
+                <ol class="track-list">
+
+                    <% album.songs.forEach(function(song, index){ %>
+
+                        <li class="track-row">
+
+                            <span class="track-number">
+                                <%= index + 1 %>
+                            </span>
+
+                            <span class="track-title">
+                                <%= song.title %>
+                            </span>
+
+                            <span class="track-duration">
+                                <%= song.duration %>
+                            </span>
+
+                        </li>
+
+                    <% }) %>
+
+                </ol>
+
+            <% } else { %>
+
+                <div class="empty-state">
+                    No songs yet.
+                </div>
+
+            <% } %>
+
+        </section>
+
+    </div>
+
+    <script src="/album.js"></script>
+
+</body>
+
+</html>

@@ -31,15 +31,31 @@ const createAlbum = async (req, res, next) => {
             slug,
             coverImage,
             releaseDate,
-            albumType } = req.body
+            albumType,
+            artistId } = req.body
         const existingalbum = await prisma.album.findUnique({
             where: {
                 slug
+            },
+            include:{
+                artists:true,
+                songs:true,
+                genres:true
             }
         })
         if (existingalbum) {
             return res.status(409).json({
                 message: "Album already exists"
+            })
+        }
+        const existingArist = await  prisma.artist.findUnique({
+            where:{
+                id:artistId
+            }
+        })
+        if(!existingArist){
+            return res.status(409).json({
+                message: "Artist not found"
             })
         }
         const album = await prisma.album.create({
@@ -48,8 +64,11 @@ const createAlbum = async (req, res, next) => {
                 title,
                 slug,
                 coverImage,
-                releaseDate,
-                albumType
+                releaseDate:releaseDate ? new Date(releaseDate): null,
+                albumType,
+                artists:{
+                    connect:[{id:artistId}]
+                }
             }
         })
         res.status(201).json({

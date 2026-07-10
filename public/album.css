@@ -1,0 +1,124 @@
+
+
+.album-content {
+    max-width: 1536px;
+    margin: auto;
+    padding: 48px;
+}
+
+.album-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 28px;
+    margin-bottom: 40px;
+}
+
+.album-cover {
+    width: 220px;
+    height: 220px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: #eee;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+.album-type {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+.album-info h1 {
+    font-size: 2.6rem;
+    margin-bottom: 12px;
+}
+
+.album-meta {
+    color: gray;
+    font-size: 15px;
+}
+
+.album-meta a {
+    color: #14161b;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.album-meta a:hover {
+    text-decoration: underline;
+}
+
+.tracklist h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.track-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.track-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+}
+
+.track-row:hover {
+    background: #f5f4f1;
+}
+
+.track-number {
+    width: 24px;
+    color: #999;
+    font-size: 14px;
+    text-align: right;
+}
+
+.track-title {
+    flex: 1;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.track-duration {
+    color: #999;
+    font-size: 14px;
+}
+
+.empty-state {
+    color: #999;
+    font-style: italic;
+    padding: 24px;
+    background: #fafafa;
+    border-radius: 8px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .album-content {
+        padding: 22px;
+    }
+
+    .album-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .album-cover {
+        width: 160px;
+        height: 160px;
+    }
+
+    .album-info h1 {
+        font-size: 1.9rem;
+    }
+}
