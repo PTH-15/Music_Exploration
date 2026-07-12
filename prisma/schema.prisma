@@ -19,6 +19,7 @@ model User {
   role         UserRole @default(USER)
   email        String   @unique
   password     String
+  confirmPassword String
   profileImage String?
   bio          String?
 
