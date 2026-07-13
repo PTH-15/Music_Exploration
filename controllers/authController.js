@@ -7,7 +7,7 @@ const regitser = async (req ,res, next)=>{
     if (password !== confirmPassword) {
         return res.render("register", { error: "Password ain't matching.." });
     }
-    const existingUser = await User.findOne({ email })
+    const existingUser = await User.findOne({where: {email} })
     if (existingUser) {
         return res.render("register", { error: "Email Already Exists!!!" })
     }
@@ -15,9 +15,9 @@ const regitser = async (req ,res, next)=>{
         bcrypt.hash(password, salt, async (err, hash) => {
 
             const newUser = await User.create({
-                name,
+                data : {name,
                 email,
-                password: hash
+                password: hash}
             })
             console.log(newUser)
             res.redirect("/login")
@@ -36,7 +36,7 @@ const login = async (req, res, next)=>{
             return res.status(404).json({
             message : "User Not Found"
         })}
-        bcrypt.compare(password, user.password, (err,result)=>{
+        bcrypt.compare(password, existingUser.password, (err,result)=>{
 
         })
 

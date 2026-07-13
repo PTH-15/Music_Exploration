@@ -22,6 +22,8 @@ model User {
   confirmPassword String
   profileImage String?
   bio          String?
+  diplayName String?
+  avatar String? 
 
   playlists Playlist[] @relation("UserPlaylists")
   createdAt DateTime   @default(now())
