@@ -1,8 +1,8 @@
-const prisma = require("../utils/prisma");
+const songservice = require('../services/song')
 
 const getAllSongs = async (req, res, next) => {
     try {
-        const songs = await prisma.song.findMany();
+        const songs = await songservice.getsongs()
 
         res.json({ songs });
 
@@ -15,17 +15,7 @@ const getSongBySlug = async (req, res, next) => {
     try {
         const { slug } = req.params;
 
-        const song = await prisma.song.findUnique({
-            where: {
-                slug
-            }
-        });
-
-        if (!song) {
-            return res.status(404).json({
-                message: "Song not found"
-            });
-        }
+        const song = await songservice.getasong(slug)
 
         res.json(song);
 
@@ -36,55 +26,7 @@ const getSongBySlug = async (req, res, next) => {
 
 const createSong = async (req, res, next) => {
     try {
-        const {
-            musicBrainzId,
-            title,
-            slug,
-            coverImage,
-            duration,
-            trackNumber,
-            releaseDate,
-            artistId,
-            albumId
-        } = req.body;
-
-        const existingSong = await prisma.song.findUnique({
-            where: {
-                slug
-            }
-        });
-
-        if (existingSong) {
-            return res.status(409).json({
-                message: "Song already exists"
-            });
-        }
-        const existingArtist = await prisma.artist.findUnique({where:{id:artistId}})
-        if(!existingArtist){
-            return res.status(409).json({
-                message: "Artist not found"
-            });
-        }
-        const existingAblum = await prisma.album.findUnique({where:{id:albumId}})
-        if(!existingAblum){
-            return res.status(409).json({
-                message: "Album not found"
-            });
-        }
-        const song = await prisma.song.create({
-            data: {
-                musicBrainzId,
-                title,
-                slug,
-                coverImage,
-                duration,
-                trackNumber,
-                releaseDate,
-                artists:{connect:[{id:artistId}]},
-                albums:{connect:[{id:albumId}]}
-            }
-        });
-
+        const song = await songservice.create(req.body)
         res.status(201).json({
             message: "Song created successfully",
             song
@@ -99,42 +41,7 @@ const updateSong = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const {
-            musicBrainzId,
-            title,
-            slug,
-            coverImage,
-            duration,
-            trackNumber,
-            releaseDate
-        } = req.body;
-
-        const existingSong = await prisma.song.findUnique({
-            where: {
-                id
-            }
-        });
-
-        if (!existingSong) {
-            return res.status(404).json({
-                message: "Song not found"
-            });
-        }
-
-        const song = await prisma.song.update({
-            where: {
-                id
-            },
-            data: {
-                musicBrainzId,
-                title,
-                slug,
-                coverImage,
-                duration,
-                trackNumber,
-                releaseDate
-            }
-        });
+        const song = await songservice.update(id, req.body)
 
         res.status(200).json({
             message: "Song updated successfully",
@@ -150,23 +57,7 @@ const deleteSong = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const existingSong = await prisma.song.findUnique({
-            where: {
-                id
-            }
-        });
-
-        if (!existingSong) {
-            return res.status(404).json({
-                message: "Song not found"
-            });
-        }
-
-        const deletedSong = await prisma.song.delete({
-            where: {
-                id
-            }
-        });
+        const deletedSong = await songservice.deletesong(id)
 
         res.status(200).json({
             message: "Song deleted successfully",

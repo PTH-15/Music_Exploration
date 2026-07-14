@@ -1,8 +1,8 @@
-const prisma = require('../utils/prisma')
-
+// const prisma = require('../utils/prisma')
+const genreservice = require('../services/genre.service')
 const getAllGenres = async (req , res , next)=>{
     try {
-        const genres = await prisma.genre.findMany()
+        const genres = await genreservice.getGenre()
         res.json(genres)
     } catch (error) {
         next(error)
@@ -12,14 +12,7 @@ const getAllGenres = async (req , res , next)=>{
 const getGenreBySlug = async (req,res,next)=>{
     try {
         const {slug} = req.params
-        const genre = await prisma.genre.findUnique({
-            where : {slug}
-        })
-        if(!genre){
-            res.status(404).json({
-                message : "Genre Not Found"
-            })
-        }
+        const genre = await genreservice.getaGenre(slug)
         res.json(genre)
     } catch (error) {
         next(error)
@@ -28,16 +21,7 @@ const getGenreBySlug = async (req,res,next)=>{
 
 const createGenre = async (req,res,next)=>{
     try {
-        const {name, slug, genreImage, description} = req.body
-        const genre = await prisma.genre.findUnique({where:{slug}})
-        if(genre){
-            return res.status(409).json({
-                message : "Genre Already Exists"
-            })
-        }
-        const newGenre = await prisma.genre.create({
-            data :{name,slug,description,genreImage}
-        })
+        const newGenre = await genreservice.create(req.body)
         res.status(201).json({
             message : "Created genre successfully",
             genre : newGenre
@@ -50,17 +34,8 @@ const createGenre = async (req,res,next)=>{
 const updateGenre = async (req,res,next)=>{
     try {
         const {id} = req.params
-        const {name, slug, genreImage, description} = req.body
-        const existingGenre = await prisma.genre.findUnique({where:{id}})
-        if(!existingGenre){
-            return res.status(404).json({
-                message:"Genre not found"
-            })
-        }
-        const genre = await prisma.genre.update({
-            where:{id},
-            data:{name, slug, genreImage, description}
-        })
+        
+        const genre = await genreservice.update(id, req.body)
         res.status(200).json({
             message : "Updated Genre successfully",
             genre
@@ -73,16 +48,10 @@ const updateGenre = async (req,res,next)=>{
 const deleteGenre = async (req,res,next)=>{
     try {
         const {id} = req.params
-        const existingGenre = await prisma.genre.findUnique({where:{id}})
-        if(!existingGenre){
-            return res.status(404).json({
-                message:"Genre not found"
-            })
-        }
-        const deleteGenre = await prisma.genre.delete({where:{id}})
+       const deletedGenre = await genreservice.deletegenre(id)
         res.status(200).json({
             message : "Genre Deleted Successfully",
-            genre : deleteGenre
+            genre : deletedGenre
         })
     } catch (error) {
         next(error)

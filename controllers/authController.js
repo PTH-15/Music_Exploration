@@ -15,9 +15,11 @@ const regitser = async (req ,res, next)=>{
         bcrypt.hash(password, salt, async (err, hash) => {
 
             const newUser = await User.create({
-                data : {name,
-                email,
-                password: hash}
+                data : {
+                    name,
+                    email,
+                    password: hash
+                }
             })
             console.log(newUser)
             res.redirect("/login")

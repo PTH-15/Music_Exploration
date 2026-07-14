@@ -1,8 +1,9 @@
-const prisma = require('../utils/prisma')
+// const prisma = require('../utils/prisma')
+const albumServices = require('../services/album.service')
 
 const allAlbum = async (req, res, next) => {
     try {
-        const albums = await prisma.album.findMany()
+        const albums = await albumServices.allAlbum()
         res.json({ albums })
     } catch (error) {
         next(error)
@@ -11,12 +12,7 @@ const allAlbum = async (req, res, next) => {
 const getOneAlbum = async (req, res, next) => {
     try {
         const { slug } = req.params
-        const existingAlbum = await prisma.album.findUnique({ where: { slug } })
-        if (!existingAlbum) {
-            return res.status(404).json({
-                message: "Album Not Found..."
-            })
-        }
+        const existingAlbum = await albumServices.getoneAlbum(slug)
         res.json(existingAlbum)
     } catch (error) {
         next(error)
@@ -25,55 +21,12 @@ const getOneAlbum = async (req, res, next) => {
 
 const createAlbum = async (req, res, next) => {
     try {
-        const {
-            musicBrainzId,
-            title,
-            slug,
-            coverImage,
-            releaseDate,
-            albumType,
-            artistId } = req.body
-        const existingalbum = await prisma.album.findUnique({
-            where: {
-                slug
-            },
-            include:{
-                artists:true,
-                songs:true,
-                genres:true
-            }
-        })
-        if (existingalbum) {
-            return res.status(409).json({
-                message: "Album already exists"
-            })
-        }
-        const existingArist = await  prisma.artist.findUnique({
-            where:{
-                id:artistId
-            }
-        })
-        if(!existingArist){
-            return res.status(409).json({
-                message: "Artist not found"
-            })
-        }
-        const album = await prisma.album.create({
-            data: {
-                musicBrainzId,
-                title,
-                slug,
-                coverImage,
-                releaseDate:releaseDate ? new Date(releaseDate): null,
-                albumType,
-                artists:{
-                    connect:[{id:artistId}]
-                }
-            }
-        })
+
+        const createdAlbum = await albumServices.create(req.body)
+        
         res.status(201).json({
             message: "Created Album successfully",
-            album
+            album:createdAlbum
         })
     } catch (error) {
         next(error)
@@ -83,28 +36,10 @@ const createAlbum = async (req, res, next) => {
 const updateAlbum = async (req,res, next)=>{
     try {
         const {id} = req.params
-        const {musicBrainzId, slug, title, coverImage, releaseDate, albumType} = req.body
-        const existingAlbum = await prisma.album.findUnique({
-            where:{
-                id
-            }
-        })
-        if(!existingAlbum){
-            return res.status(404).json({
-                message:"Album not found"
-            })
-        }
-        const album = await prisma.album.update({
-            where:{
-                id
-            },
-            data:{
-                musicBrainzId, title, coverImage, releaseDate, albumType, slug
-            }
-        })
+        const updatedAlbum = await albumServices.updateAlbum(id, req.body) //{musicBrainzId, slug, title, coverImage, releaseDate, albumType} = req.body
         res.status(200).json({
             message : "Updated Album successfully",
-            album
+            album:updatedAlbum
         })
     } catch (error) {
         next(error)
@@ -114,22 +49,10 @@ const updateAlbum = async (req,res, next)=>{
 const deleteAlbum = async (req,res, next)=>{
     try {
         const {id} = req.params
-        const existingAlbum = await prisma.album.findUnique({
-            where:{
-                id
-            }
-        })
-        if(!existingAlbum){
-            return res.status(404).json({
-                message:"Album not found"
-            })
-        }
-        const artist = await prisma.album.delete({
-            where:{id}
-        })
+        const deletedAlbum = await albumServices.deleteAlbum(id)
         res.status(200).json({
             message : "Deleted album successfully",
-            artist
+            album: deletedAlbum
         })
     } catch (error) {
         next(error)
