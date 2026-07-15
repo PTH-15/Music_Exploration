@@ -1,4 +1,4 @@
-const playlistservice = require('../services/playlist.service')
+const playlistservice = require('../services/playlist')
 
 const getAllPlaylists = async (req, res, next) => {
     try {

@@ -1,5 +1,5 @@
 // const prisma = require('../utils/prisma')
-const genreservice = require('../services/genre.service')
+const genreservice = require('../services/genre')
 const getAllGenres = async (req , res , next)=>{
     try {
         const genres = await genreservice.getGenre()

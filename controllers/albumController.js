@@ -1,5 +1,5 @@
 // const prisma = require('../utils/prisma')
-const albumServices = require('../services/album.service')
+const albumServices = require('../services/album')
 
 const allAlbum = async (req, res, next) => {
     try {
