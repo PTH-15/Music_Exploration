@@ -1,31 +1,22 @@
-const prisma = require('../utils/prisma')
+const authService = require('../services/auth')
 
 
-const regitser = async (req ,res, next)=>{
+const register = async (req ,res, next)=>{
     try {
-        const { name, email, password, confirmPassword } = req.body
-    if (password !== confirmPassword) {
-        return res.render("register", { error: "Password ain't matching.." });
-    }
-    const existingUser = await User.findOne({where: {email} })
-    if (existingUser) {
-        return res.render("register", { error: "Email Already Exists!!!" })
-    }
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(password, salt, async (err, hash) => {
-
-            const newUser = await User.create({
-                data : {
-                    name,
-                    email,
-                    password: hash
-                }
-            })
-            console.log(newUser)
-            res.redirect("/login")
+        const {email, name, password, confirmPassword,username} = req.body
+        if (password !== confirmPassword){
+            return res.status(400).json({message:"Password ain't matching.."})
+        }
+        const user = await authService.registerUser({
+            name,
+            email,
+            password,
+            username
         })
-    })
-
+        res.status(201).json({
+            message:"User created successfully",
+            user
+        })
     } catch (error) {
         next(error)
     }
@@ -33,17 +24,17 @@ const regitser = async (req ,res, next)=>{
 const login = async (req, res, next)=>{
     try {
         const {email, password} = req.body
-        const existingUser = await prisma.user.findUnique({where:{email}})
-        if (!existingUser){
-            return res.status(404).json({
-            message : "User Not Found"
-        })}
-        bcrypt.compare(password, existingUser.password, (err,result)=>{
-
+        const user = await authService.loginUser({email,password})
+        // req.session.userId = user.id
+        res.status(200).json({
+            message:"Login Successfully",
+            user
         })
-
-
+        
     } catch (error) {
         next(error)
     }
 }
+
+
+module.exports={register,login}

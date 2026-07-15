@@ -4,7 +4,7 @@ const renderExploreArtists = async (req, res, next) => {
     try {
         const artists = await prisma.artist.findMany();
 
-        res.render("Explore-artists", { artists });
+        res.render("explore-artists", { artists });
     } catch (error) {
         next(error);
     }

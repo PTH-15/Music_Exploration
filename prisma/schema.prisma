@@ -19,10 +19,9 @@ model User {
   role         UserRole @default(USER)
   email        String   @unique
   password     String
-  confirmPassword String
   profileImage String?
   bio          String?
-  diplayName String?
+  name String?
   avatar String? 
 
   playlists Playlist[] @relation("UserPlaylists")
