@@ -100,7 +100,6 @@ model Artist {
   primaryGenreId String?
   primaryGenre   Genre?     @relation("PrimaryGenre", fields: [primaryGenreId], references: [id])
   genres         Genre[]    @relation("ArtistGenres")
-
   songs  Song[]
   albums Album[]
 }

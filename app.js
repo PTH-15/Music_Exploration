@@ -10,13 +10,13 @@ const genreRoute = require('./routes/genreRoutes')
 const albumRoute = require('./routes/albumRoute')
 const songRoute = require('./routes/songRoute')
 const playlistRoute = require('./routes/playlistRoute')
+const  logoutRoute  = require("./routes/logoutRoute");
 const { renderExploreArtists, renderArtistPage, renderAlbumPage } = require("./controllers/pageController");
 const session = require('express-session')
 
 app.set('view engine','ejs')
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use("/api/auth",authRoute)
 app.use("/api/artists", artistRoutes)
 app.use('/api/genres',genreRoute)
 app.use('/api/albums',albumRoute)
@@ -27,9 +27,11 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: false
+        maxAge:1000*60*60*24
     }
 }))
+app.use('/api/auth',logoutRoute)
+app.use("/api/auth",authRoute)
 app.use(express.static(path.join(__dirname, 'public')))
 app.get('/',(req,res)=>{
     res.render('landing')
@@ -38,6 +40,14 @@ app.get("/explore-artists", renderExploreArtists)
 app.get("/artist/:slug", renderArtistPage)
 app.get("/album/:slug", renderAlbumPage)
 
-const errorMiddleware = require('./middleware/errorMiddleware')
+app.get('/login', (req, res) => {
+  res.render('login', { error: null });
+});
+
+app.get('/signup', (req, res) => {
+  res.render('register', { error: null });
+});
+
+const errorMiddleware = require('./middleware/errorMiddleware');
 app.use(errorMiddleware)
 app.listen(3000)

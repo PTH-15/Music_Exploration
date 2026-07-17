@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - Music Exploration</title>
+    <link rel="stylesheet" href="/landing.css">
+    <link rel="stylesheet" href="/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">Music<span>Exploration</span></div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="/">Home</a>
+                <a href="/explore-artists">Explore</a>
+                <a href="/views/">Playlists</a>
+                <a href="">Genres</a>
+                <a href="/artist">Artist</a>
+                <a href="">About</a>
+            </div>
+
+            <div class="nav-search">
+                <input class="input" id="searchInput" name="text" placeholder="Search artists, genres, playlists..." type="search">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+
+            <div class="nav-auth">
+                <a href="/login" class="btn-ghost active">Log in</a>
+                <a href="/signup" class="btn-solid">Sign up</a>
+            </div>
+        </nav>
+
+        <main class="auth-page">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1>Welcome back</h1>
+                    <p>Log in to keep exploring your music</p>
+                </div>
+
+                <% if (typeof error !== 'undefined' && error) { %>
+                    <div class="error-banner">
+                        <span><%= error %></span>
+                    </div>
+                <% } %>
+
+                <div class="error-banner" id="errorBanner" style="display: none;">
+                    <span id="errorText"></span>
+                </div>
+
+                <form id="loginForm" class="auth-form" action="/login" method="POST" novalidate>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            required
+                        />
+                        <span class="field-error" id="emailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                required
+                            />
+                            <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password">
+                                👁
+                            </button>
+                        </div>
+                        <span class="field-error" id="passwordError"></span>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" name="remember" id="remember" />
+                            Remember me
+                        </label>
+                        <a href="/forgot-password" class="forgot-link">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn" id="loginSubmitBtn">
+                        Log In
+                    </button>
+                </form>
+
+                <div class="auth-switch-prompt">
+                    Don't have an account? <a href="/register">Sign up</a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-section">
+                <h4>Music<span>Exploration</span></h4>
+                <p>Your gateway to discover music. Find artists, genres and playlists beyond the algorithm.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Developer</h4>
+                <a href="" class="links">Github</a>
+                <a href="" class="links">LinkedIn</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="" class="links">About</a>
+                <a href="" class="links">Contact</a>
+                <a href="" class="links">Privacy Policy</a>
+            </div>
+        </footer>
+        <hr>
+        <div class="footer-credit">
+            © 2026 Music Exploration • Built by Prathmesh (PTH)
+        </div>
+    </div>
+
+    <script src="/landing.js"></script>
+    <script src="/login.js"></script>
+</body>
+
+</html>

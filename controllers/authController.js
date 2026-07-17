@@ -25,7 +25,7 @@ const login = async (req, res, next)=>{
     try {
         const {email, password} = req.body
         const user = await authService.loginUser({email,password})
-        // req.session.userId = user.id
+        req.session.userId = user.id
         res.status(200).json({
             message:"Login Successfully",
             user
