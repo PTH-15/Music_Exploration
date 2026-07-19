@@ -44,9 +44,28 @@ app.get('/login', (req, res) => {
   res.render('login', { error: null });
 });
 
-app.get('/signup', (req, res) => {
+app.get('/register', (req, res) => {
   res.render('register', { error: null });
 });
+app.get('/genres', (req, res) => {
+  res.render('genres');
+});
+
+app.get('/genre/:slug', (req, res) => {
+  const genre = {
+    name: 'Hip-Hop',
+    slug: req.params.slug,
+    icon: '🎤',
+    tone: 'a',
+    description: 'Rhythmic beats, sharp lyricism, and a culture built from the streets up.',
+    songCount: 340,
+    artists: [
+      { name: 'Kr$na', slug: 'krsna', profileImage: '/images/krsna.jpg', albumCount: 45, songCount: 120 },
+    ],
+  };
+  res.render('genre', { genre });
+});
+
 
 const errorMiddleware = require('./middleware/errorMiddleware');
 app.use(errorMiddleware)

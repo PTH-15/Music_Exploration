@@ -1,0 +1,158 @@
+
+.genre-banner{
+  width:100%;
+  height:260px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  position:relative;
+}
+
+.genre-banner[data-tone="a"]{background:linear-gradient(160deg,#3a2416,#12100e);}
+.genre-banner[data-tone="b"]{background:linear-gradient(160deg,#173049,#0e1520);}
+.genre-banner[data-tone="c"]{background:linear-gradient(160deg,#42210f,#160d06);}
+.genre-banner[data-tone="d"]{background:linear-gradient(160deg,#3d1414,#150707);}
+.genre-banner[data-tone="e"]{background:linear-gradient(160deg,#241a3d,#0d0916);}
+.genre-banner[data-tone="f"]{background:linear-gradient(160deg,#3d1424,#16060d);}
+.genre-banner[data-tone="g"]{background:linear-gradient(160deg,#332312,#120d06);}
+.genre-banner[data-tone="h"]{background:linear-gradient(160deg,#14201c,#080d0b);}
+
+.genre-banner-icon{
+  display:block;
+  font-size:2.6rem;
+  margin-bottom:8px;
+}
+
+.genre-banner-content h1{
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,3.4vw,2.6rem);
+  font-weight:700;
+  margin:0;
+}
+
+.genre-banner-content p{
+  margin-top:8px;
+  font-size:.9rem;
+  color:rgba(255,255,255,.75);
+}
+
+/* ---------- Content ---------- */
+.genre-page-content{
+  max-width:1536px;
+  margin:0 auto;
+  padding:48px;
+}
+
+.genre-page-content section{
+  margin-bottom:48px;
+}
+
+.genre-page-content h2{
+  font-family:var(--font-display);
+  font-size:1.4rem;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:18px;
+}
+
+.about p{
+  font-size:.95rem;
+  line-height:1.6;
+  color:var(--ink-soft);
+  max-width:720px;
+}
+
+/* ---------- Artist grid ---------- */
+.genre-artist-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.genre-artist-card{
+  display:flex;
+  flex-direction:column;
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+
+.genre-artist-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 28px -16px rgba(20,22,27,.3);
+}
+
+.genre-artist-card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  background:var(--dark-2);
+}
+
+.genre-artist-info{
+  padding:14px 16px;
+}
+
+.genre-artist-info h3{
+  font-family:var(--font-display);
+  font-size:1rem;
+  font-weight:700;
+  color:var(--ink);
+  margin:0 0 4px 0;
+}
+
+.genre-artist-info p{
+  font-size:.78rem;
+  color:var(--ink-soft);
+  margin:0;
+}
+
+/* ---------- Playlists ---------- */
+.genre-playlist-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.genre-playlist-card{
+  padding:22px;
+  border-radius:var(--radius-md);
+  color:#fff;
+}
+
+.genre-playlist-card .playlist-label{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:1.05rem;
+  margin-bottom:8px;
+}
+
+.genre-playlist-card p{
+  font-size:.85rem;
+  color:rgba(255,255,255,.8);
+  line-height:1.5;
+}
+
+.genre-playlist-card.beginner{background:linear-gradient(135deg,#1c7c4f,#0f4a2e);}
+.genre-playlist-card.intermediate{background:linear-gradient(135deg,#c46a1f,#7a3f0f);}
+.genre-playlist-card.advance{background:linear-gradient(135deg,#a02f2f,#5c1717);}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1199px){
+  .genre-artist-grid{grid-template-columns:repeat(3,1fr);}
+}
+
+@media (max-width:860px){
+  .genre-page-content{padding:32px 22px;}
+  .genre-artist-grid{grid-template-columns:repeat(2,1fr);}
+  .genre-playlist-grid{grid-template-columns:1fr;}
+}
+
+@media (max-width:480px){
+  .genre-artist-grid{grid-template-columns:1fr;}
+  .genre-banner{height:200px;}
+}

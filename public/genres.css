@@ -1,0 +1,178 @@
+/* genres.css
+   Genre listing page. Reuses the 8 tone colors already defined for
+   .genre-chip in landing.css (data-tone a–h) so this page's cards
+   feel like the same family as the homepage genre grid.
+*/
+
+.genres-main{
+  max-width:1536px;
+  margin:0 auto;
+  padding:56px 48px 60px;
+}
+
+/* ---------- Hero ---------- */
+.genres-hero{
+  max-width:640px;
+  margin-bottom:40px;
+}
+
+.genres-hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,3.6vw,2.8rem);
+  font-weight:700;
+  line-height:1.1;
+  color:var(--ink);
+  margin-top:14px;
+}
+
+.genres-hero h1 span{
+  color:var(--accent);
+}
+
+.genres-sub{
+  margin-top:16px;
+  font-size:1rem;
+  line-height:1.6;
+  color:var(--ink-soft);
+}
+
+/* ---------- Controls ---------- */
+.genres-controls{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:28px;
+}
+
+.genres-search-field{
+  position:relative;
+  display:flex;
+  align-items:center;
+  flex:1;
+  min-width:240px;
+}
+
+.genres-search-field .input{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  color:var(--ink);
+  padding:12px 18px 12px 44px;
+  border-radius:999px;
+  font-size:.92rem;
+  width:100%;
+}
+
+.genres-search-field .input::placeholder{
+  color:var(--ink-soft);
+}
+
+.genres-search-field .search-icon{
+  position:absolute;
+  left:16px;
+  width:16px;
+  height:16px;
+  color:var(--ink-soft);
+  pointer-events:none;
+}
+
+.sort-select{
+  background:var(--paper-card);
+  border:1px solid var(--line);
+  color:var(--ink);
+  border-radius:999px;
+  padding:12px 18px;
+  font-size:.88rem;
+  font-weight:600;
+  font-family:var(--font-body);
+  cursor:pointer;
+}
+
+/* ---------- Results ---------- */
+.genres-count{
+  font-size:.85rem;
+  color:var(--ink-soft);
+  margin-bottom:16px;
+}
+
+.genres-count span{
+  font-weight:700;
+  color:var(--ink);
+}
+
+.genre-list-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+}
+
+.genre-list-card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding:24px;
+  border-radius:var(--radius-md);
+  color:#fff;
+  overflow:hidden;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+
+.genre-list-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 16px 30px -14px rgba(20,22,27,.4);
+}
+
+.genre-list-card[data-tone="a"]{background:#3a2416;}
+.genre-list-card[data-tone="b"]{background:#173049;}
+.genre-list-card[data-tone="c"]{background:#42210f;}
+.genre-list-card[data-tone="d"]{background:#3d1414;}
+.genre-list-card[data-tone="e"]{background:#241a3d;}
+.genre-list-card[data-tone="f"]{background:#3d1424;}
+.genre-list-card[data-tone="g"]{background:#332312;}
+.genre-list-card[data-tone="h"]{background:#14201c;}
+
+.genre-list-icon{
+  font-size:1.6rem;
+}
+
+.genre-list-name{
+  font-family:var(--font-display);
+  font-size:1.1rem;
+  font-weight:700;
+}
+
+.genre-list-meta{
+  font-size:.8rem;
+  color:rgba(255,255,255,.72);
+}
+
+/* ---------- Empty state ---------- */
+.empty-state{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  padding:60px 20px;
+  text-align:center;
+  color:var(--ink-soft);
+}
+
+.empty-icon{
+  font-size:2rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1199px){
+  .genre-list-grid{grid-template-columns:repeat(3,1fr);}
+}
+
+@media (max-width:860px){
+  .genres-main{padding:40px 22px 48px;}
+  .genre-list-grid{grid-template-columns:repeat(2,1fr);}
+  .genres-controls{flex-direction:column; align-items:stretch;}
+}
+
+@media (max-width:480px){
+  .genre-list-grid{grid-template-columns:1fr;}
+}

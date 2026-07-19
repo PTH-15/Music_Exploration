@@ -368,9 +368,9 @@ ul{list-style:none;margin:0;padding:0;}
 .playlist-meta .dot{opacity:.6;}
 
 /* Small buttons for sidebar cards */
-.btn-sm{padding:9px 16px; font-size:.84rem; align-self:flex-start;}
+.btn-sm{padding:9px 16px; font-size:.84rem; align-self:flex-start;background-color: #ff5f2e;}
 .side-card .btn-outline.btn-sm{border-color:var(--dark-line); color:var(--dark-text);}
-.side-card .btn-outline.btn-sm:hover{background:var(--dark-text); color:var(--dark);}
+.side-card .btn-outline.btn-sm:hover{background:#ff8a5c; color:var(--dark);}
 
 /* Platform features list */
 .feature-list{display:flex; flex-direction:column; gap:14px;}

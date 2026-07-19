@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Genres · Music Exploration</title>
+    <link rel="stylesheet" href="/landing.css">
+    <link rel="stylesheet" href="/genres.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">Music<span>Exploration</span></div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="/">Home</a>
+                <a href="/explore-artists">Explore</a>
+                <a href="">Playlists</a>
+                <a href="/genres" class="active">Genres</a>
+                <a href="artist">Artist</a>
+                <a href="">About</a>
+            </div>
+
+            <div class="nav-search">
+                <input class="input" id="searchInput" name="text" placeholder="Search artists, genres, playlists..." type="search">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+
+            <div class="nav-auth">
+                <a href="/login" class="btn-ghost">Log in</a>
+                <a href="/signup" class="btn-solid">Sign up</a>
+            </div>
+        </nav>
+
+        <main class="genres-main">
+
+            <section class="genres-hero">
+                <span class="eyebrow">BROWSE</span>
+                <h1>Find music by <span>genre.</span></h1>
+                <p class="genres-sub">From Hip-Hop to Classical — explore every sound in the catalog.</p>
+            </section>
+
+            <section class="genres-controls">
+                <div class="search-panel-field genres-search-field">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <input class="input" id="genreSearchInput" name="text" placeholder="Search genres..." type="search">
+                </div>
+
+                <select class="sort-select" id="genreSortSelect">
+                    <option value="trending">Sort: Trending</option>
+                    <option value="az">Sort: A–Z</option>
+                    <option value="artists">Sort: Most Artists</option>
+                </select>
+            </section>
+
+            <section class="genres-results">
+                <div class="genres-count">
+                    <span id="genreResultCount">0</span> genres
+                </div>
+
+                <div class="genre-list-grid" id="genreListGrid">
+                    <!-- Cards are rendered here by genres.js from the GENRES array below.
+                         Once you have a real backend route (e.g. GET /api/genres),
+                         swap the GENRES array for a fetch() call. -->
+                </div>
+
+                <div class="empty-state" id="genreEmptyState" hidden>
+                    <span class="empty-icon">🔍</span>
+                    <p>No genres match your search. Try a different keyword.</p>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            <div class="footer-section">
+                <h4>Music<span>Exploration</span></h4>
+                <p>Your gateway to discover music. Find artists, genres and playlists beyond the algorithm.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Developer</h4>
+                <a href="" class="links">Github</a>
+                <a href="" class="links">LinkedIn</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="" class="links">About</a>
+                <a href="" class="links">Contact</a>
+                <a href="" class="links">Privacy Policy</a>
+            </div>
+        </footer>
+        <hr>
+        <div class="footer-credit">
+            © 2026 Music Exploration • Built by Prathmesh (PTH)
+        </div>
+    </div>
+
+    <script src="/genres.js"></script>
+</body>
+
+</html>

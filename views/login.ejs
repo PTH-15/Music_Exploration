@@ -34,7 +34,7 @@
 
             <div class="nav-auth">
                 <a href="/login" class="btn-ghost active">Log in</a>
-                <a href="/signup" class="btn-solid">Sign up</a>
+                <a href="/register" class="btn-solid">Sign up</a>
             </div>
         </nav>
 
@@ -55,7 +55,7 @@
                     <span id="errorText"></span>
                 </div>
 
-                <form id="loginForm" class="auth-form" action="/login" method="POST" novalidate>
+                <form id="loginForm" class="auth-form" action="/api/auth/login" method="POST" novalidate>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= genre.name %> | Music Exploration
+    </title>
+
+    <link rel="stylesheet" href="/landing.css">
+    <link rel="stylesheet" href="/genre.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Music<span>Exploration</span></div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/explore-artists">Explore</a>
+            <a href="/genres">Genres</a>
+        </div>
+    </nav>
+
+    <section class="genre-banner" data-tone="<%= genre.tone %>">
+        <div class="genre-banner-content">
+            <span class="genre-banner-icon"><%= genre.icon %></span>
+            <h1><%= genre.name %></h1>
+            <p><%= genre.artists.length %> Artists • <%= genre.songCount %> Songs</p>
+        </div>
+    </section>
+
+    <div class="genre-page-content">
+
+        <section class="about">
+            <h2>About</h2>
+            <p><%= genre.description %></p>
+        </section>
+
+        <section class="genre-artists">
+            <h2>Artists</h2>
+            <% if (genre.artists.length === 0) { %>
+                <p>No artists in this genre yet.</p>
+                <% } else { %>
+                    <div class="genre-artist-grid">
+                        <% genre.artists.forEach(artist => { %>
+                            <a href="/artist/<%= artist.slug %>" class="genre-artist-card">
+                                <img src="<%= artist.profileImage %>" alt="<%= artist.name %>"
+                                    onerror="this.src='/images/default-artist.png'">
+                                <div class="genre-artist-info">
+                                    <h3><%= artist.name %></h3>
+                                    <p><%= artist.albumCount %> Albums • <%= artist.songCount %> Songs</p>
+                                </div>
+                            </a>
+                            <% }) %>
+                    </div>
+                    <% } %>
+        </section>
+
+    </div>
+
+    <script src="/genre.js"></script>
+
+</body>
+
+</html>
