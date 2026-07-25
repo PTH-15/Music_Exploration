@@ -65,6 +65,130 @@ app.get('/genre/:slug', (req, res) => {
   };
   res.render('genre', { genre });
 });
+app.get('/song/:slug', async (req, res) => {
+  try {
+    const song = await prisma.song.findUnique({
+      where: { slug: req.params.slug },
+      include: {
+        artists: {
+          include: {
+            songs: {
+              select: { title: true, slug: true },
+              take: 5
+            }
+          }
+        },
+        albums: true,
+        genres: true,
+        playlists: true
+      }
+    });
+ 
+    if (!song) {
+      return res.status(404).render('404');
+    }
+ 
+    res.render('song', { song });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Something went wrong loading this song.');
+  }
+});
+// Add this route to app.js
+
+app.get('/search', async (req, res) => {
+  const q = (req.query.q || '').trim();
+
+  if (!q) {
+    return res.render('search', {
+      query: '',
+      artists: [], albums: [], songs: [], playlists: []
+    });
+  }
+
+  try {
+    const [artists, albums, songs, playlists] = await Promise.all([
+      prisma.artist.findMany({
+        where: { name: { contains: q, mode: 'insensitive' } },
+        take: 20
+      }),
+      prisma.album.findMany({
+        where: { title: { contains: q, mode: 'insensitive' } },
+        include: { artists: { select: { name: true, slug: true } } },
+        take: 20
+      }),
+      prisma.song.findMany({
+        where: { title: { contains: q, mode: 'insensitive' } },
+        include: { artists: { select: { name: true, slug: true } } },
+        take: 20
+      }),
+      prisma.playlist.findMany({
+        where: {
+          title: { contains: q, mode: 'insensitive' },
+          visibility: 'PUBLIC'
+        },
+        include: { creator: { select: { username: true } } },
+        take: 20
+      })
+    ]);
+
+    res.render('search', { query: q, artists, albums, songs, playlists });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Something went wrong running that search.');
+  }
+});
+// Add these routes to app.js
+
+// Browse playlists — Recently Added is real (sorted by createdAt).
+// "Trending" needs a play-count/likes field on Playlist before it can be real.
+app.get('/playlists', async (req, res) => {
+  try {
+    const recent = await prisma.playlist.findMany({
+      where: { visibility: 'PUBLIC' },
+      include: {
+        creator: { select: { username: true } },
+        songs: { select: { id: true } },
+        genres: { select: { name: true, slug: true } }
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 24
+    });
+
+    res.render('playlists', { recent });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Something went wrong loading playlists.');
+  }
+});
+
+// Single playlist
+app.get('/playlist/:slug', async (req, res) => {
+  try {
+    const playlist = await prisma.playlist.findUnique({
+      where: { slug: req.params.slug },
+      include: {
+        creator: { select: { username: true, avatar: true, profileImage: true } },
+        songs: {
+          include: {
+            artists: { select: { name: true, slug: true } },
+            albums: { select: { title: true, slug: true, coverImage: true } }
+          }
+        },
+        genres: true
+      }
+    });
+
+    if (!playlist) {
+      return res.status(404).render('404');
+    }
+
+    res.render('playlist', { playlist });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Something went wrong loading this playlist.');
+  }
+});
 
 
 const errorMiddleware = require('./middleware/errorMiddleware');

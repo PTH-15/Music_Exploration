@@ -1,0 +1,94 @@
+/* search.css — relies on tokens + .search-panel, .chip, .section-block,
+   .section-head, .container already defined in landing.css. Loaded AFTER landing.css. */
+
+.search-page{
+  max-width:100%;
+  padding:56px 48px 60px;
+}
+.search-header-block{margin-top:0;}
+
+.search-empty{
+  padding:48px 24px;
+  text-align:center;
+  color:var(--ink-soft);
+  font-size:.95rem;
+  border:1.5px dashed var(--line);
+  border-radius:var(--radius-md);
+  margin-top:32px;
+}
+
+/* Card grid for artists / albums / playlists */
+.result-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+  gap:16px;
+}
+.result-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--line);
+  background:var(--paper-card);
+  transition:border-color .15s ease, transform .15s ease;
+}
+.result-card:hover{border-color:var(--accent); transform:translateY(-2px);}
+.result-card strong{display:block; font-size:.95rem;}
+.result-card small{color:var(--ink-soft); font-size:.8rem;}
+
+.result-avatar{
+  flex:0 0 52px; width:52px; height:52px;
+  border-radius:8px;
+  background-color:#1a1d25;
+  background-size:cover;
+  background-position:center;
+}
+.result-avatar.round{border-radius:50%;}
+.result-avatar.sm{flex:0 0 40px; width:40px; height:40px; border-radius:6px;}
+
+/* List for songs */
+.result-list{display:flex; flex-direction:column; gap:8px;}
+.result-row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:10px 14px;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--line);
+  background:var(--paper-card);
+  transition:border-color .15s ease;
+}
+.result-row:hover{border-color:var(--accent);}
+.result-row-info{flex:1; min-width:0;}
+.result-row-info strong{display:block; font-size:.92rem;}
+.result-row-info small{color:var(--ink-soft); font-size:.78rem;}
+.result-duration{color:var(--ink-soft); font-size:.82rem; font-weight:600;}
+
+/* Search submit button embedded in navbar form */
+
+.search-panel-field{
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.search-panel-icon{
+    position:absolute;
+    left:16px;
+    top:50%;
+    transform:translateY(-50%);
+    width:18px;
+    height:18px;
+    color:var(--ink-soft);
+    pointer-events:none;
+}
+
+.search-panel-field .input{
+    padding-left:46px;
+}
+
+@media (max-width:860px){
+  .search-page{padding:36px 22px 48px;}
+  .result-grid{grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));}
+}

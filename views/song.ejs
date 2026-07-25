@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= song.title %> · Music Exploration</title>
+    <link rel="stylesheet" href="/landing.css">
+    <link rel="stylesheet" href="/song.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">Music<span>Exploration</span></div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="/">Home</a>
+                <a href="/explore-artists">Explore</a>
+                <!-- <a href="/views/">Playlists</a> -->
+                <a href="/genres">Genres</a>
+                <!-- <a href="/artist" class="active">Artist</a> -->
+                <a href="">About</a>
+            </div>
+
+            <div class="nav-search">
+                <input class="input" id="searchInput" name="text" placeholder="Search artists, genres, playlists..." type="search">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+
+            <div class="nav-auth">
+                <a href="/login" class="btn-ghost">Log in</a>
+                <a href="" class="btn-solid">Sign up</a>
+            </div>
+        </nav>
+
+        <main class="song-grid">
+
+            <!-- ===================== SONG HERO ===================== -->
+            <section class="song-hero">
+                <div class="song-cover" style="<%= song.coverImage ? `background-image:url('${song.coverImage}')` : '' %>"></div>
+
+                <div class="song-hero-info">
+                    <span class="eyebrow">TRACK <%= String(song.trackNumber).padStart(2,'0') %></span>
+                    <h1><%= song.title %></h1>
+
+                    <div class="song-meta-row">
+                        <div class="song-artists">
+                            <% song.artists.forEach(function(artist, i){ %>
+                                <a href="/artist/<%= artist.slug %>"><%= artist.name %></a><%= i < song.artists.length - 1 ? ',&nbsp;' : '' %>
+                            <% }) %>
+                        </div>
+                        <span class="dot">•</span>
+                        <span class="song-duration"><%= String(Math.floor(song.duration/60)).padStart(2,'0') %>:<%= String(song.duration%60).padStart(2,'0') %></span>
+                        <% if (song.releaseDate) { %>
+                            <span class="dot">•</span>
+                            <span class="song-year"><%= new Date(song.releaseDate).getFullYear() %></span>
+                        <% } %>
+                    </div>
+
+                    <div class="song-genre-chips">
+                        <% song.genres.forEach(function(genre){ %>
+                            <a href="/genres/<%= genre.slug %>" class="genre-tag"><%= genre.name %></a>
+                        <% }) %>
+                    </div>
+
+                    <div class="song-cta">
+                        <button class="btn-solid btn-lg" id="playBtn">▶ Play Preview</button>
+                        <a href="#lyrics" class="btn-outline btn-lg">Lyrics</a>
+                        <button class="btn-icon" id="addPlaylistBtn" aria-label="Add to playlist">+</button>
+                    </div>
+                </div>
+            </section>
+
+            <div class="song-content">
+
+                <!-- ===================== APPEARS ON ===================== -->
+                <section class="section-block">
+                    <div class="section-head">
+                        <h2>Appears On</h2>
+                    </div>
+                    <div class="album-strip">
+                        <% song.albums.forEach(function(album){ %>
+                            <a href="/album/<%= album.slug %>" class="album-strip-card">
+                                <div class="album-strip-cover" style="<%= album.coverImage ? `background-image:url('${album.coverImage}')` : '' %>"></div>
+                                <div>
+                                    <strong><%= album.title %></strong>
+                                    <small><%= album.albumType %><%= album.releaseDate ? ' · ' + new Date(album.releaseDate).getFullYear() : '' %></small>
+                                </div>
+                            </a>
+                        <% }) %>
+                    </div>
+                </section>
+
+                <!-- ===================== SPOTIFY EMBED (placeholder — no field on Song model yet) ===================== -->
+                <section class="section-block">
+                    <div class="section-head">
+                        <h2>Listen</h2>
+                    </div>
+                    <div class="spotify-embed-placeholder">
+                        <p>Spotify preview will go here once <code>spotifyEmbedUrl</code> is added to the Song model.</p>
+                        <!--
+                        <iframe style="border-radius:12px" src="<%= song.spotifyEmbedUrl %>"
+                            width="100%" height="152" frameBorder="0" allowfullscreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"></iframe>
+                        -->
+                    </div>
+                </section>
+
+                <!-- ===================== LYRICS (placeholder — no field on Song model yet) ===================== -->
+                <section class="section-block" id="lyrics">
+                    <div class="section-head">
+                        <h2>Lyrics</h2>
+                    </div>
+                    <div class="lyrics-placeholder">
+                        <p>No <code>lyricsUrl</code> field on the Song model yet — once added, link out to Genius / official lyrics here.</p>
+                        <a href="#" class="view-all">Find lyrics externally →</a>
+                    </div>
+                </section>
+
+                <!-- ===================== BEST MOMENTS (placeholder — needs new model) ===================== -->
+                <section class="section-block">
+                    <div class="section-head">
+                        <h2>Best Moments</h2>
+                        <span class="section-sub">Community-timestamped highlights</span>
+                    </div>
+
+                    <ul class="moments-list" id="momentsList">
+                        <li class="moments-empty">No best moments yet — be the first to add one.</li>
+                    </ul>
+
+                    <p class="section-note">Needs a <code>Moment</code> model (songId, timestamp, note, likes, userId) in Prisma before this can be populated or submitted.</p>
+                </section>
+
+                <!-- ===================== COMMUNITY RATING (placeholder — needs new model) ===================== -->
+                <section class="section-block">
+                    <div class="section-head">
+                        <h2>Community Rating</h2>
+                    </div>
+                    <div class="rating-card">
+                        <div class="rating-score">
+                            <strong>—</strong>
+                            <span>No ratings yet</span>
+                        </div>
+                        <div class="rating-stars" id="ratingStars">
+                            <button class="star" data-value="1">★</button>
+                            <button class="star" data-value="2">★</button>
+                            <button class="star" data-value="3">★</button>
+                            <button class="star" data-value="4">★</button>
+                            <button class="star" data-value="5">★</button>
+                        </div>
+                    </div>
+                    <p class="section-note">Needs a <code>Rating</code> model (songId, userId, value) in Prisma — stars above are UI-only until then.</p>
+                </section>
+
+            </div>
+
+            <!-- ===================== SIDEBAR ===================== -->
+            <aside class="right song-side">
+                <div class="sidebar-inner">
+
+                    <div class="side-card">
+                        <h3 class="side-card-title">More from <%= song.artists[0] ? song.artists[0].name : 'this artist' %></h3>
+                        <ol class="trend-list">
+                            <% song.artists[0] && song.artists[0].songs && song.artists[0].songs.slice(0,5).forEach(function(s, i){ %>
+                                <li><a href="/song/<%= s.slug %>"><span class="trend-rank"><%= String(i+1).padStart(2,'0') %></span><%= s.title %></a></li>
+                            <% }) %>
+                        </ol>
+                    </div>
+
+                    <div class="side-card">
+                        <h3 class="side-card-title">In Playlists</h3>
+                        <ul class="feature-list">
+                            <% song.playlists.slice(0,5).forEach(function(pl){ %>
+                                <li>
+                                    <div>
+                                        <strong><a href="/playlist/<%= pl.slug %>"><%= pl.title %></a></strong>
+                                        <p><%= pl.description || '' %></p>
+                                    </div>
+                                </li>
+                            <% }) %>
+                            <% if (!song.playlists.length) { %>
+                                <li><div><p>Not currently in any public playlists.</p></div></li>
+                            <% } %>
+                        </ul>
+                    </div>
+
+                </div>
+            </aside>
+
+        </main>
+
+        <footer class="footer">
+            <div class="footer-section">
+                <h4>Music<span>Exploration</span></h4>
+                <p>Your gateway to discover music. Find artists, genres and playlists beyond the algorithm.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Developer</h4>
+                <a href="" class="links">Github</a>
+                <a href="" class="links">LinkedIn</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="" class="links">About</a>
+                <a href="" class="links">Contact</a>
+                <a href="" class="links">Privacy Policy</a>
+            </div>
+        </footer>
+        <hr>
+        <div class="footer-credit">
+            © 2026 Music Exploration • Built by Prathmesh (PTH)
+        </div>
+    </div>
+
+    <script src="/landing.js"></script>
+    <script src="/song.js"></script>
+</body>
+
+</html>

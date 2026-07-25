@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= playlist.title %> · Music Exploration</title>
+    <link rel="stylesheet" href="/landing.css">
+    <link rel="stylesheet" href="/playlist.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">Music<span>Exploration</span></div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="/">Home</a>
+                <a href="/explore-artists">Explore</a>
+                <!-- <a href="/playlists" class="active">Playlists</a> -->
+                <a href="/genres">Genres</a>
+                <!-- <a href="/artist">Artist</a> -->
+                <a href="">About</a>
+            </div>
+
+            <form class="nav-search" action="/search" method="GET">
+                <input class="input" name="q" placeholder="Search artists, genres, playlists..." type="search">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </form>
+
+            <div class="nav-auth">
+                <a href="/login" class="btn-ghost">Log in</a>
+                <a href="register" class="btn-solid">Sign up</a>
+            </div>
+        </nav>
+
+        <main class="playlist-page">
+
+            <!-- ===================== PLAYLIST HERO ===================== -->
+            <section class="playlist-hero">
+                <div class="playlist-cover" style="<%= playlist.coverImage ? `background-image:url('${playlist.coverImage}')` : '' %>"></div>
+
+                <div class="playlist-hero-info">
+                    <span class="eyebrow"><%= playlist.visibility %> PLAYLIST</span>
+                    <h1><%= playlist.title %></h1>
+                    <% if (playlist.description) { %>
+                        <p class="playlist-description"><%= playlist.description %></p>
+                    <% } %>
+
+                    <div class="playlist-meta-row">
+                        <div class="playlist-creator">
+                            <div class="creator-avatar" style="<%= (playlist.creator.avatar || playlist.creator.profileImage) ? `background-image:url('${playlist.creator.avatar || playlist.creator.profileImage}')` : '' %>"></div>
+                            <span>by <strong><%= playlist.creator.username %></strong></span>
+                        </div>
+                        <span class="dot">•</span>
+                        <span><%= playlist.songs.length %> songs</span>
+                        <span class="dot">•</span>
+                        <span>Updated <%= new Date(playlist.updatedAt).toLocaleDateString() %></span>
+                    </div>
+
+                    <% if (playlist.genres.length) { %>
+                        <div class="playlist-genre-chips">
+                            <% playlist.genres.forEach(function(genre){ %>
+                                <a href="/genres/<%= genre.slug %>" class="genre-tag"><%= genre.name %></a>
+                            <% }) %>
+                        </div>
+                    <% } %>
+
+                    <div class="playlist-cta">
+                        <button class="btn-solid btn-lg" id="playAllBtn">▶ Play All</button>
+
+                        <!-- Likes — placeholder, needs a Like/PlaylistLike model -->
+                        <button class="btn-outline btn-lg" id="likeBtn" disabled title="Needs a Like model on Playlist">
+                            ♡ Like
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== SONGS ===================== -->
+            <section class="section-block">
+                <div class="section-head">
+                    <h2>Songs</h2>
+                </div>
+
+                <% if (!playlist.songs.length) { %>
+                    <div class="playlist-empty">
+                        <p>No songs added to this playlist yet.</p>
+                    </div>
+                <% } else { %>
+                    <ul class="playlist-tracklist">
+                        <% playlist.songs.forEach(function(song, i){ %>
+                            <li class="track-row">
+                                <span class="track-index"><%= i + 1 %></span>
+                                <div class="track-cover" style="<%= song.coverImage ? `background-image:url('${song.coverImage}')` : '' %>"></div>
+                                <div class="track-info">
+                                    <a href="/song/<%= song.slug %>" class="track-title"><%= song.title %></a>
+                                    <span class="track-artists"><%= song.artists.map(a => a.name).join(', ') %></span>
+                                </div>
+                                <span class="track-album">
+                                    <% if (song.albums[0]) { %>
+                                        <a href="/album/<%= song.albums[0].slug %>"><%= song.albums[0].title %></a>
+                                    <% } %>
+                                </span>
+                                <span class="track-duration"><%= String(Math.floor(song.duration/60)).padStart(2,'0') %>:<%= String(song.duration%60).padStart(2,'0') %></span>
+                            </li>
+                        <% }) %>
+                    </ul>
+                <% } %>
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            <div class="footer-section">
+                <h4>Music<span>Exploration</span></h4>
+                <p>Your gateway to discover music. Find artists, genres and playlists beyond the algorithm.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Developer</h4>
+                <a href="" class="links">Github</a>
+                <a href="" class="links">LinkedIn</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="" class="links">About</a>
+                <a href="" class="links">Contact</a>
+                <a href="" class="links">Privacy Policy</a>
+            </div>
+        </footer>
+        <hr>
+        <div class="footer-credit">
+            © 2026 Music Exploration • Built by Prathmesh (PTH)
+        </div>
+    </div>
+
+    <script src="/landing.js"></script>
+    <script src="/playlist.js"></script>
+</body>
+
+</html>

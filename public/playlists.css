@@ -1,0 +1,68 @@
+/* playlists.css — relies on tokens + .genre-tag from song.css / .section-block
+   from landing.css. Loaded AFTER landing.css (and after song.css if present). */
+
+.playlists-page{
+  padding:56px 48px 60px;
+}
+.playlists-header{margin-top:0;}
+.playlists-sub{
+  margin-top:10px;
+  color:var(--ink-soft);
+  font-size:.95rem;
+  max-width:560px;
+}
+
+.trending-placeholder,
+.playlists-empty{
+  border:1.5px dashed var(--line);
+  border-radius:var(--radius-md);
+  padding:24px;
+  color:var(--ink-soft);
+  font-size:.9rem;
+}
+.trending-placeholder code{
+  background:rgba(20,22,27,.06);
+  padding:2px 6px;
+  border-radius:4px;
+}
+
+.playlist-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+  gap:20px;
+}
+.playlist-card{
+  display:flex;
+  flex-direction:column;
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:var(--paper-card);
+  transition:transform .15s ease, border-color .15s ease;
+}
+.playlist-card:hover{transform:translateY(-3px); border-color:var(--accent);}
+.playlist-card-cover{
+  height:150px;
+  background-color:#1a1d25;
+  background-size:cover;
+  background-position:center;
+}
+.playlist-card-body{padding:14px;}
+.playlist-card-body strong{display:block; font-size:.98rem; margin-bottom:4px;}
+.playlist-card-body small{color:var(--ink-soft); font-size:.8rem;}
+.playlist-card-genres{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;}
+
+/* genre-tag fallback in case song.css isn't loaded on this page */
+.genre-tag{
+  font-size:.72rem;
+  font-weight:600;
+  padding:4px 10px;
+  border-radius:999px;
+  background:rgba(20,22,27,.06);
+  color:var(--ink-soft);
+}
+
+@media (max-width:860px){
+  .playlists-page{padding:36px 22px 48px;}
+  .playlist-grid{grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));}
+}

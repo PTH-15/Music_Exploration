@@ -21,16 +21,29 @@
             <div class="nav-links" id="navLinks">
                 <a href="/">Home</a>
                 <a href="/explore-artists" class="active">Explore</a>
-                <a href="">Playlists</a>
-                <a href="">Genres</a>
-                <a href="artist">Artist</a>
+                <!-- <a href="">Playlists</a> -->
+                <a href="genres">Genres</a>
+                <!-- <a href="artist">Artist</a> -->
                 <a href="">About</a>
             </div>
 
-            <div class="nav-search">
-                <input class="input" id="searchInput" name="text" placeholder="Search artists, genres, playlists..." type="search">
-                <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </div>
+            <form class="nav-search" action="/search" method="GET">
+
+                <input class="input" type="search" name="q" placeholder="Search artists, genres, playlists...">
+
+                <button type="submit" class="search-submit">
+
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+
+                        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+
+                        <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+
+                    </svg>
+
+                </button>
+
+            </form>
 
             <div class="nav-auth">
                 <a href="login" class="btn-ghost">Log in</a>
@@ -43,13 +56,18 @@
             <section class="explore-hero">
                 <span class="eyebrow">EXPLORE</span>
                 <h1>Every artist, <span>one place.</span></h1>
-                <p class="explore-sub">Browse the full catalog, filter by genre, and sort by what's trending right now.</p>
+                <p class="explore-sub">Browse the full catalog, filter by genre, and sort by what's trending right now.
+                </p>
             </section>
 
             <section class="explore-controls">
                 <div class="search-panel-field explore-search-field">
-                    <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                    <input class="input" id="artistSearchInput" name="text" placeholder="Search artists..." type="search">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+                        <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    <input class="input" id="artistSearchInput" name="text" placeholder="Search artists..."
+                        type="search">
                 </div>
 
                 <div class="explore-filters">

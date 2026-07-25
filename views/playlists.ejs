@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlists · Music Exploration</title>
+    <link rel="stylesheet" href="/landing.css">
+    <link rel="stylesheet" href="/playlists.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">Music<span>Exploration</span></div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="/">Home</a>
+                <a href="/explore-artists">Explore</a>
+                <a href="/playlists" class="active">Playlists</a>
+                <a href="/genres">Genres</a>
+                <!-- <a href="/artist">Artist</a> -->
+                <a href="">About</a>
+            </div>
+
+            <form class="nav-search" action="/search" method="GET">
+                <input class="input" name="q" placeholder="Search artists, genres, playlists..." type="search">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </form>
+
+            <div class="nav-auth">
+                <a href="/login" class="btn-ghost">Log in</a>
+                <a href="" class="btn-solid">Sign up</a>
+            </div>
+        </nav>
+
+        <main class="playlists-page">
+
+            <section class="section-block playlists-header">
+                <div class="section-head">
+                    <h2>Playlists</h2>
+                </div>
+                <p class="playlists-sub">Browse community playlists — beginner paths, deep cuts, and everything in between.</p>
+            </section>
+
+            <!-- ===================== TRENDING (placeholder — no play/like count on Playlist model yet) ===================== -->
+            <section class="section-block">
+                <div class="section-head">
+                    <h2>Trending</h2>
+                    <span class="section-sub">Most played this week</span>
+                </div>
+                <div class="trending-placeholder">
+                    <p>Trending needs a play-count or likes field on the <code>Playlist</code> model to rank by — not available yet.</p>
+                </div>
+            </section>
+
+            <!-- ===================== RECENTLY ADDED (real data) ===================== -->
+            <section class="section-block">
+                <div class="section-head">
+                    <h2>Recently Added</h2>
+                </div>
+
+                <% if (!recent.length) { %>
+                    <div class="playlists-empty">
+                        <p>No public playlists yet — create one to see it here.</p>
+                    </div>
+                <% } else { %>
+                    <div class="playlist-grid">
+                        <% recent.forEach(function(pl){ %>
+                            <a href="/playlist/<%= pl.slug %>" class="playlist-card">
+                                <div class="playlist-card-cover" style="<%= pl.coverImage ? `background-image:url('${pl.coverImage}')` : '' %>"></div>
+                                <div class="playlist-card-body">
+                                    <strong><%= pl.title %></strong>
+                                    <small><%= pl.songs.length %> songs · by <%= pl.creator.username %></small>
+                                    <% if (pl.genres.length) { %>
+                                        <div class="playlist-card-genres">
+                                            <% pl.genres.slice(0,3).forEach(function(g){ %>
+                                                <span class="genre-tag"><%= g.name %></span>
+                                            <% }) %>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </a>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            <div class="footer-section">
+                <h4>Music<span>Exploration</span></h4>
+                <p>Your gateway to discover music. Find artists, genres and playlists beyond the algorithm.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Developer</h4>
+                <a href="" class="links">Github</a>
+                <a href="" class="links">LinkedIn</a>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="" class="links">About</a>
+                <a href="" class="links">Contact</a>
+                <a href="" class="links">Privacy Policy</a>
+            </div>
+        </footer>
+        <hr>
+        <div class="footer-credit">
+            © 2026 Music Exploration • Built by Prathmesh (PTH)
+        </div>
+    </div>
+
+    <script src="/landing.js"></script>
+</body>
+
+</html>

@@ -50,7 +50,16 @@
   font-size:.95rem;
 }
 .explore-search-field{position:relative;}
-.explore-search-field .search-icon{left:16px; right:auto; color:var(--ink-soft);}
+.explore-search-field .search-icon{
+    position:absolute;
+    left:16px;
+    top:50%;
+    transform:translateY(-50%);
+    width:18px;
+    height:18px;
+    color:var(--ink-soft);
+    pointer-events:none;
+}
 
 .explore-filters{
   display:flex;

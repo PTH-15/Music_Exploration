@@ -65,26 +65,71 @@ ul{list-style:none;margin:0;padding:0;}
 .nav-links a{color:var(--dark-muted); transition:color .15s;}
 .nav-links a:hover, .nav-links a.active{color:var(--dark-text);}
 
+/* ---------- Navbar Search ---------- */
+
 .nav-search{
-  flex:1;
-  display:flex;
-  align-items:center;
-  position:relative;
-  max-width:420px;
+    position:relative;
+    flex:1;
+    max-width:420px;
+    display:flex;
+    align-items:center;
 }
-.input{
-  width:100%;
-  padding:10px 40px 10px 16px;
-  border-radius:999px;
-  border:1px solid var(--dark-line);
-  background:var(--dark-2);
-  color:var(--dark-text);
-  font-size:.88rem;
-  font-family:var(--font-body);
+
+.nav-search .input{
+    width:100%;
+    height:42px;
+    padding:0 46px 0 18px;
+    border-radius:999px;
+    border:1px solid var(--dark-line);
+    background:var(--dark-2);
+    color:var(--dark-text);
+    font-size:.9rem;
+    font-family:var(--font-body);
+    outline:none;
+    transition:border-color .2s ease, box-shadow .2s ease;
 }
-.input::placeholder{color:var(--dark-muted);}
-.search-icon{
-  position:absolute; right:14px; width:16px; height:16px; color:var(--dark-muted); pointer-events:none;
+
+.nav-search .input::placeholder{
+    color:var(--dark-muted);
+}
+
+.nav-search .input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(255,95,46,.15);
+}
+
+.search-submit{
+    position:absolute;
+    top:50%;
+    right:10px;
+    transform:translateY(-50%);
+
+    width:28px;
+    height:28px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:none;
+    background:transparent;
+    border-radius:50%;
+    cursor:pointer;
+
+    transition:background .2s ease;
+}
+
+
+
+.search-submit .search-icon{
+    width:16px;
+    height:16px;
+    color:var(--dark-muted);
+    pointer-events:none;
+}
+
+.search-submit:hover .search-icon{
+    color:var(--accent);
 }
 
 .nav-auth{display:flex; align-items:center; gap:12px; white-space:nowrap;}
@@ -115,9 +160,9 @@ ul{list-style:none;margin:0;padding:0;}
 /* ---------- Layout ---------- */
 .page-grid{
   display:grid;
-  grid-template-columns:3fr 1fr;
+  grid-template-columns:1fr 340px;
   grid-template-areas:
-    "hero   hero"
+    "hero    sidebar"
     "content sidebar";
   column-gap:36px;
   align-items:start;
@@ -142,6 +187,8 @@ ul{list-style:none;margin:0;padding:0;}
   gap:18px;
   position:sticky;
   top:96px;
+  min-height:calc(100vh - 116px);
+  justify-content:space-between;
 }
 
 /* ---------- Hero ---------- */
@@ -225,6 +272,14 @@ ul{list-style:none;margin:0;padding:0;}
   font-size:1.2rem; cursor:pointer; color:var(--ink);
 }
 
+/* Let Featured Artists break out past the sidebar to the screen edge */
+.carousel-breakout{
+  margin-right:calc(-340px - 36px);
+}
+.carousel-breakout .carousel-wrap{
+  padding-right:48px;
+}
+
 /* ---------- Genre grid ---------- */
 .genre-grid{
   display:grid;
@@ -296,7 +351,25 @@ ul{list-style:none;margin:0;padding:0;}
   font-size:.95rem;
 }
 .search-panel-field .input::placeholder{color:var(--ink-soft);}
-.search-panel-field .search-icon{left:16px; right:auto; color:var(--ink-soft);}
+.search-panel-icon{
+    position:absolute;
+    left:16px;
+    top:50%;
+    transform:translateY(-50%);
+    width:18px;
+    height:18px;
+    color:var(--ink-soft);
+    pointer-events:none;
+    display:block;
+}
+
+.search-panel-field .input{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    color:var(--ink);
+    padding:14px 18px 14px 48px;
+    font-size:.95rem;
+}
 .search-chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
 .chip{
   border:1px solid var(--line);
@@ -435,8 +508,10 @@ ul{list-style:none;margin:0;padding:0;}
   .hero{padding:48px 40px 0;}
   .content{padding:0 40px 56px;}
   .right{padding:40px 40px 0;}
-  .sidebar-inner{position:static; top:auto;}
+  .sidebar-inner{position:static; top:auto; min-height:0; justify-content:flex-start;}
   .side-card:hover{transform:none;}
+  .carousel-breakout{margin-right:0;}
+  .carousel-breakout .carousel-wrap{padding-right:0;}
 }
 
 @media (max-width:860px){
