@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><Admin-Sidebar></Admin-Sidebar></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #121212;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            color: #1DB954;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .sidebarBtnContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebarBtn {
+            text-decoration: none;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .sidebarBtn:hover {
+            background: #1DB954;
+            color: #121212;
+        }
+
+        .sidebarBtn.active {
+            background: #1DB954;
+            color: #121212;
+            font-weight: bold;
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Music Exploration</h2>
+
+        <div class="sidebarBtnContainer">
+            <a href="/admin" class="sidebarBtn <%= activePage === 'dashboard' ? 'active' : '' %>">Dashboard</a>
+            <a href="/admin/artists" class="sidebarBtn <%= activePage === 'artists' ? 'active' : '' %>">Artists</a>
+            <a href="/admin/albums" class="sidebarBtn <%= activePage === 'albums' ? 'active' : '' %>">Albums</a>
+            <a href="/admin/songs" class="sidebarBtn <%= activePage === 'songs' ? 'active' : '' %>">Songs</a>
+            <a href="/admin/genres" class="sidebarBtn <%= activePage === 'genres' ? 'active' : '' %>">Genres</a>
+            <a href="/admin/playlists" class="sidebarBtn <%= activePage === 'playlists' ? 'active' : '' %>">Playlists</a>
+            <a href="/admin/users" class="sidebarBtn <%= activePage === 'users' ? 'active' : '' %>">Users</a>
+        </div>
+    </div>
+</body>
+
+</html>

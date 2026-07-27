@@ -1,0 +1,45 @@
+const axios = require("axios");
+const BASE_URL = "https://musicbrainz.org/ws/2";
+exports.searchArtists = async (query) => {
+
+    const response = await axios.get(
+        "https://musicbrainz.org/ws/2/artist",
+        {
+            params:{
+                query,
+                fmt:"json"
+            },
+            headers:{
+                "User-Agent":"MusicExploration/1.0 (your@email.com)"
+            }
+        }
+    );
+
+    return response.data.artists;
+}
+
+exports.getArtistById = async (id) => {
+    try {
+
+        const response = await axios.get(
+            `${BASE_URL}/artist/${id}`,
+            {
+                params: {
+                    fmt: "json"
+                },
+                headers: {
+                    "User-Agent": "MusicExploration/1.0 (your-email@example.com)"
+                }
+            }
+        );
+
+        return response.data;
+
+    } catch (error) {
+
+        console.error(error.message);
+
+        return null;
+
+    }
+};

@@ -13,6 +13,7 @@ const playlistRoute = require('./routes/playlistRoute')
 const  logoutRoute  = require("./routes/logoutRoute");
 const { renderExploreArtists, renderArtistPage, renderAlbumPage } = require("./controllers/pageController");
 const session = require('express-session')
+const adminRoute = require("./routes/adminRoute");
 
 app.set('view engine','ejs')
 app.use(express.json())
@@ -39,7 +40,7 @@ app.get('/',(req,res)=>{
 app.get("/explore-artists", renderExploreArtists)
 app.get("/artist/:slug", renderArtistPage)
 app.get("/album/:slug", renderAlbumPage)
-
+app.use("/admin", adminRoute);
 app.get('/login', (req, res) => {
   res.render('login', { error: null });
 });

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Artists</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #181818;
+        }
+
+        .Container {
+            display: flex;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+            color: white;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+        .search-btn {
+            text-decoration: none;
+        }
+
+        .search-btn button {
+            background: #1DB954;
+            color: #111;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .search-btn button:hover {
+            background: #18a34a;
+        }
+
+        .artist-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #242424;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .artist-table th {
+            background: #2e2e2e;
+            padding: 18px;
+            text-align: left;
+        }
+
+        .artist-table td {
+            padding: 18px;
+            border-top: 1px solid #3a3a3a;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #b3b3b3;
+        }
+
+        .empty-state h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="Container">
+
+        <%- include("../partials/sidebar") %>
+
+            <div class="content">
+
+                <div class="header">
+
+                    <h1>Artists</h1>
+
+                    <a href="/admin/artists/search" class="search-btn">
+                        <button>+ Search MusicBrainz</button>
+                    </a>
+
+                </div>
+
+                <hr>
+
+                <table class="artist-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Name</th>
+                            <th>Country</th>
+                            <th>Spotify</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+
+                            <td colspan="4">
+
+                                <div class="empty-state">
+
+                                    <h2>No Artists Yet</h2>
+
+                                    <p>Search and import your first artist from MusicBrainz.</p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+    </div>
+
+</body>
+
+</html>
