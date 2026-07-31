@@ -96,6 +96,50 @@
             border-top: 1px solid #333;
             margin-bottom: 20px;
         }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 34px;
+
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: .2s ease;
+        }
+
+        .edit-btn {
+            background: #323232;
+            color: #ffffff;
+        }
+
+        .edit-btn:hover {
+            background: #444;
+        }
+
+        .delete-btn {
+            background: #3b1d1d;
+            color: #ff6b6b;
+        }
+
+        .delete-btn:hover {
+            background: #512424;
+        }
+
+        .artist-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
     </style>
 </head>
 
@@ -126,7 +170,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Country</th>
-                            <th>Spotify</th>
+                            <th>Type</th>
                             <th>Actions</th>
                         </tr>
 
@@ -134,21 +178,76 @@
 
                     <tbody>
 
-                        <tr>
+                        <% if (artists.length===0) { %>
 
-                            <td colspan="4">
+                            <tr>
 
-                                <div class="empty-state">
+                                <td colspan="4">
 
-                                    <h2>No Artists Yet</h2>
+                                    <div class="empty-state">
 
-                                    <p>Search and import your first artist from MusicBrainz.</p>
+                                        <h2>No Artists Yet</h2>
 
-                                </div>
+                                        <p>Search and import your first artist.</p>
 
-                            </td>
+                                    </div>
 
-                        </tr>
+                                </td>
+
+                            </tr>
+
+                            <% } else { %>
+
+                                <% artists.forEach(artist=> { %>
+
+                                    <tr>
+
+                                        <td>
+                                            <%= artist.name %>
+                                        </td>
+
+                                        <td>
+                                            <%= artist.country || "-" %>
+                                        </td>
+
+                                        <td>
+                                            <%= artist.type %>
+                                        </td>
+
+
+
+                                        <td>
+
+                                            <div class="actions">
+
+                                                <a class="action-btn edit-btn"
+                                                    href="/admin/artists/<%= artist.id %>/edit">
+
+                                                    Edit
+
+                                                </a>
+
+                                                <form action="/admin/artists/<%= artist.id %>/delete" method="POST"
+                                                    style="display:inline;">
+
+                                                    <button type="submit" class="action-btn delete-btn">
+
+                                                        Delete
+
+                                                    </button>
+
+                                                </form>
+
+                                            </div>
+
+                                        </td>
+
+
+                                    </tr>
+
+                                    <% }) %>
+
+                                        <% } %>
 
                     </tbody>
 

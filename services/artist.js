@@ -1,7 +1,15 @@
 const prisma = require('../utils/prisma')
 
 const allArtist = async () => {
-    const artists = await prisma.artist.findMany()
+    const artists = await prisma.artist.findMany({
+        include:{
+            primaryGenre: true,
+            genres: true
+        },
+        orderBy:{
+            name:"asc"
+        }
+    })
     return artists
 } 
 
