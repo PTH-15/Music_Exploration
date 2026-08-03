@@ -1,6 +1,6 @@
 const { searchArtists } = require("../services/musicbrainzService");
 const {
-    
+
     getArtistById
 } = require("../services/musicbrainzService");
 const prisma = require("../utils/prisma");
@@ -28,9 +28,9 @@ exports.renderCreateArtistForm = async (req, res) => {
 
     const artist = await getArtistById(id);
     const genres = await prisma.genre.findMany({
-        orderBy:{
-        name:"asc"
-    },
+        orderBy: {
+            name: "asc"
+        },
     })
     const slug = artist.name
         .toLowerCase()
@@ -72,14 +72,16 @@ exports.createArtist = async (req, res) => {
             slug,
             country,
             musicBrainzId,
-            type
+            type,
+            primaryGenreId,
+            genreIds
 
         } = req.body;
 
         // Check duplicate
         const existingArtist = await prisma.artist.findUnique({
 
-            where:{
+            where: {
 
                 musicBrainzId
 
@@ -87,35 +89,41 @@ exports.createArtist = async (req, res) => {
 
         });
 
-        if(existingArtist){
+        if (existingArtist) {
 
             return res.send("Artist already imported.");
 
         }
 
-        
 
+        console.log(genreIds);
         await prisma.artist.create({
 
-            data:{
-
+            data: {
                 name,
-
                 slug,
-
                 country,
-
                 musicBrainzId,
+                type: mapArtistType(type),
 
-                type: mapArtistType(type)
+                primaryGenre: {
+                    connect: {
+                        id: primaryGenreId
+                    }
+                },
 
+                genres: {
+                    connect: (genreIds || []).map(id => ({
+                        id
+                    }))
+                }
             }
 
         });
 
         res.redirect("/admin/artists");
 
-    } catch(err){
+    } catch (err) {
 
         console.log(err);
 
@@ -143,14 +151,19 @@ exports.renderEditArtistForm = async (req, res) => {
             id: req.params.id
         }
     });
-
+    const genres = await prisma.genre.findMany({
+        orderBy: {
+            name: "asc"
+        }
+    });
     if (!artist) {
         return res.redirect("/admin/artists");
     }
 
     res.render("admin/artists/edit", {
         activePage: "artists",
-        artist
+        artist,
+        genres
     });
 
 };
@@ -162,7 +175,9 @@ exports.updateArtist = async (req, res) => {
             name,
             slug,
             country,
-            type
+            type,
+            primaryGenreId
+
         } = req.body;
 
         await prisma.artist.update({
@@ -176,7 +191,13 @@ exports.updateArtist = async (req, res) => {
                 name,
                 slug,
                 country,
-                type: mapArtistType(type)
+                type: mapArtistType(type),
+                primaryGenre: {
+                    connect: {
+                        id: primaryGenreId
+                    }
+                }
+
 
             }
 
@@ -187,7 +208,7 @@ exports.updateArtist = async (req, res) => {
     } catch (err) {
 
         console.log(err);
-
+        console.error(err);
         res.send("Something went wrong.");
 
     }

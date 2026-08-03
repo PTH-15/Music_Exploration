@@ -1,5 +1,7 @@
 const axios = require("axios");
 const BASE_URL = "https://musicbrainz.org/ws/2";
+
+
 exports.searchArtists = async (query) => {
 
     const response = await axios.get(
@@ -43,3 +45,22 @@ exports.getArtistById = async (id) => {
 
     }
 };
+
+exports.getSong = async(id) =>{
+    try {
+        const song = await axios.get(
+            `${BASE_URL}/recording/${id}`,
+            {
+                params: {
+                    fmt: "json"
+                },
+                headers: {
+                    "User-Agent": "MusicExploration/1.0 (your-email@example.com)"
+                }
+            }
+        )
+        return song.data;
+    } catch (error) {
+        console.error(error.message)
+    }
+}
