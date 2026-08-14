@@ -96,7 +96,17 @@ exports.createArtist = async (req, res) => {
         }
 
 
+        console.log(req.body);
         console.log(genreIds);
+        console.log(typeof genreIds);
+        console.log(Array.isArray(genreIds));
+        const genreArray = Array.isArray(genreIds)
+            ? genreIds
+            : genreIds
+                ? [genreIds]
+                : [];
+
+        console.log(genreArray);
         await prisma.artist.create({
 
             data: {
@@ -113,7 +123,7 @@ exports.createArtist = async (req, res) => {
                 },
 
                 genres: {
-                    connect: (genreIds || []).map(id => ({
+                    connect: genreArray.map(id => ({
                         id
                     }))
                 }

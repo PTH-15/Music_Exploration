@@ -195,7 +195,7 @@
                     <div class="form-group">
                         <label>Primary Genre</label>
                         <select name="primaryGenreId" required>
-                            <option value=" ">Select Primary Genre</option>
+                            <option value="">Select Primary Genre</option>
                             <% genres.forEach(genre => { %>
                                 <option
                 value="<%= genre.id %>" <%= artist.primaryGenreId === genre.id ? "selected" : "" %>> <%= genre.name %>
