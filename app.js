@@ -139,10 +139,7 @@ app.get('/search', async (req, res) => {
     res.status(500).send('Something went wrong running that search.');
   }
 });
-// Add these routes to app.js
 
-// Browse playlists — Recently Added is real (sorted by createdAt).
-// "Trending" needs a play-count/likes field on Playlist before it can be real.
 app.get('/playlists', async (req, res) => {
   try {
     const recent = await prisma.playlist.findMany({

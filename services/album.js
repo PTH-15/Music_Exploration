@@ -20,7 +20,7 @@ const create = async ( albumdata)=>{
                 coverImage,
                 releaseDate,
                 albumType,
-                artistId} = albumData
+                artistId} = albumData 
     const existingalbum = await prisma.album.findUnique({
             where: {
                 slug

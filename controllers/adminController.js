@@ -1,25 +1,13 @@
 const { searchArtists } = require("../services/musicbrainzService");
-const {
-
-    getArtistById
-} = require("../services/musicbrainzService");
+const { getArtistById } = require("../services/musicbrainzService");
 const prisma = require("../utils/prisma");
 const mapArtistType = require("../utils/mapArtistType");
 exports.renderDashboard = (req, res) => {
     res.render("admin/dashboard");
 };
-exports.renderArtists = (req, res) => {
-    res.render("admin/artists/index");
-};
 exports.renderDashboard = (req, res) => {
     res.render("admin/dashboard", {
         activePage: "dashboard"
-    });
-};
-
-exports.renderArtists = (req, res) => {
-    res.render("admin/artists/index", {
-        activePage: "artists"
     });
 };
 exports.renderCreateArtistForm = async (req, res) => {
@@ -154,6 +142,25 @@ exports.renderArtists = async (req, res) => {
         artists
     });
 };
+
+exports.renderManage = async (req, res) => {
+    const artist = await prisma.artist.findUnique({
+        where: {
+            id: req.params.id
+        }
+    });
+    if (!artist) {
+        return res.redirect("/admin/artists");
+    }
+    
+    res.render("admin/artists/edit", {
+        activePage: "artists",
+        manage
+    });
+    
+}
+
+
 exports.renderEditArtistForm = async (req, res) => {
 
     const artist = await prisma.artist.findUnique({
@@ -248,3 +255,40 @@ exports.deleteArtist = async (req, res) => {
 
 };
 
+exports.renderGenre = async (req, res) => {
+    const genres = await prisma.genre.findMany({
+        orderBy: {
+            name: "asc"
+        }
+    });
+
+    res.render("admin/genres/index", {
+        activePage: "genres",
+        genres
+    });
+};
+
+exports.renderAlbum = async (req, res) => {
+    const albums = await prisma.album.findMany({
+        orderBy: {
+            title: "asc"
+        }
+    });
+
+    res.render("admin/albums/index", {
+        activePage: "albums",
+        albums
+    });
+};
+exports.renderSong = async (req, res) => {
+    const songs = await prisma.song.findMany({
+        orderBy: {
+            title: "asc"
+        }
+    });
+
+    res.render("admin/songs/index", {
+        activePage: "songs",
+        songs
+    });
+};

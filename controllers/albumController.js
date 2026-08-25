@@ -28,7 +28,7 @@ const createAlbum = async (req, res, next) => {
             message: "Created Album successfully",
             album:createdAlbum
         })
-    } catch (error) {
+    } catch (error) { 
         next(error)
     }
 }

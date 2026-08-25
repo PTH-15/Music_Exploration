@@ -1,0 +1,268 @@
+🎵 Album CRUD — Final TODO
+
+1. Finish the Album backend foundation
+
+Work on:
+
+services/album.js
+controllers/albumController.js
+routes/albumRoute.js
+
+Goal:
+
+Album can have multiple artists
+Album can have multiple genres
+Album has type: Album / EP / Single / Compilation / Live
+Create, update, delete work correctly
+Don't add primary genre
+
+2. Show Albums inside Artist Manage
+
+Work on:
+
+controllers/artistController.js
+views/admin/artists/manage.ejs
+services/album.js
+
+Goal:
+
+Admin
+ → Artists
+ → Manage Artist
+      ↓
+   Albums section
+      ↓
+   Album 1
+   Album 2
+   Album 3
+
+The current artist automatically becomes the selected artist when adding an album.
+
+3. Add "Add Album" button
+
+Work on:
+
+views/admin/artists/manage.ejs
+
+Click:
+
+Add Album
+
+and go to a separate album form page.
+
+We need to determine whether an existing album form/view should be repurposed or a new one created after checking the current routes/controller flow.
+
+4. Create Album page
+
+Work on:
+
+views/admin/albums/
+controllers/albumController.js
+routes/albumRoute.js
+services/album.js
+
+The form should contain:
+
+Title
+Album Type
+Artists
+Genres
+Release Date
+Cover Image URL
+MusicBrainz ID
+
+Because you're coming from Artist → Manage Artist → Add Album:
+
+Arijit Singh
+     ↓
+Add Album
+     ↓
+Arijit Singh already selected
+
+But you can additionally select other artists.
+
+Example:
+
+Artists:
+☑ Arijit Singh
+☐ Shreya Ghoshal
+☐ Pritam
+5. Add MusicBrainz Album Import
+
+Work on:
+
+services/musicbrainzService.js
+controllers/albumController.js
+routes/albumRoute.js
+views/admin/albums/
+
+Flow:
+
+Manage Artist
+      ↓
+Add Album
+      ↓
+Search MusicBrainz
+      ↓
+Albums belonging to THIS artist
+      ↓
+Select Album
+      ↓
+Auto-fill form
+
+The selected MusicBrainz album should populate the relevant fields.
+
+6. Add editable cover fetching
+
+Work on:
+
+services/musicbrainzService.js
+controllers/albumController.js
+views/admin/albums/
+
+Flow:
+
+MusicBrainz Album
+       ↓
+Try to get cover
+       ↓
+Found?
+ ┌─────┴─────┐
+YES         NO
+ ↓           ↓
+Auto-fill   Empty/manual URL
+ ↓
+User can edit it
+
+So the cover is never mandatory from MusicBrainz.
+
+7. Save Album
+
+Work on:
+
+services/album.js
+controllers/albumController.js
+
+When saving:
+
+Album
+ ├── Artists[]
+ ├── Genres[]
+ ├── Type
+ ├── Release Date
+ ├── Cover
+ └── MusicBrainz ID
+
+Make sure duplicate MusicBrainz IDs are handled.
+
+8. Edit Album
+
+Work on:
+
+controllers/albumController.js
+services/album.js
+routes/albumRoute.js
+views/admin/albums/
+views/admin/artists/manage.ejs
+
+From Artist Manage:
+
+Album
+  ↓
+Edit
+  ↓
+Edit Album page
+  ↓
+Save
+  ↓
+Back to Artist Manage
+9. Delete Album
+
+Work on:
+
+controllers/albumController.js
+services/album.js
+routes/albumRoute.js
+views/admin/artists/manage.ejs
+
+Delete it safely while considering its relationships.
+
+10. Show Albums on Artist Manage correctly
+
+Final Artist Manage section:
+
+Artist
+│
+├── Genres
+│
+├── Albums
+│   ├── Album A
+│   │   ├── Artists
+│   │   ├── Genres
+│   │   └── Edit / Delete
+│   │
+│   ├── Album B
+│   └── Album C
+│
+└── Songs
+
+There is no need for a global /admin/albums management page.
+
+Your existing:
+
+views/admin/albums/index.ejs
+
+therefore needs to be evaluated/reused/removed depending on what it's currently doing. Don't blindly build another page around it.
+
+11. Test Album completely
+
+Test:
+
+Artist Manage
+      ↓
+Add Album
+      ↓
+Manual creation
+      ↓
+Album appears under Artist
+      ↓
+Edit
+      ↓
+Update
+      ↓
+Delete
+
+Then test:
+
+Artist Manage
+      ↓
+Add Album
+      ↓
+MusicBrainz
+      ↓
+Select Album
+      ↓
+Auto-fill
+      ↓
+Edit cover if necessary
+      ↓
+Save
+12. Only after all of this → Song CRUD
+
+Then we'll follow the same philosophy:
+
+Artist Manage
+      ↓
+Albums
+      ↓
+Album
+      ↓
+Songs
+      ↓
+Add Song → separate page
+      ↓
+MusicBrainz
+      ↓
+Auto-fill
+
+And Songs will also support multiple artists + multiple genres, unless we later decide otherwise.

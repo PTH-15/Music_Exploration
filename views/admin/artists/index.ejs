@@ -117,12 +117,12 @@
             transition: .2s ease;
         }
 
-        .edit-btn {
+        .manage-btn {
             background: #323232;
             color: #ffffff;
         }
 
-        .edit-btn:hover {
+        .manage-btn:hover {
             background: #444;
         }
 
@@ -200,7 +200,7 @@
 
                                 <% artists.forEach(artist=> { %>
 
-                                    <tr>
+                                    <tr> 
 
                                         <td>
                                             <%= artist.name %>
@@ -218,9 +218,9 @@
 
                                         <td>
 
-                                            <div class="actions">
+                                            <!-- <div class="actions">
 
-                                                <a class="action-btn edit-btn"
+                                                <a class="action-btn manage-btn"
                                                     href="/admin/artists/<%= artist.id %>/edit">
 
                                                     Edit
@@ -238,7 +238,13 @@
 
                                                 </form>
 
-                                            </div>
+                                            </div> -->
+                                            <a class="action-btn manage-btn"
+                                                    href="/admin/artists/<%= artist.id %>/manage">
+
+                                                    Manage
+
+                                                </a>
 
                                         </td>
 
