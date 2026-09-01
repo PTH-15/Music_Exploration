@@ -36,24 +36,41 @@ exports.renderCreateArtistForm = async (req, res) => {
 exports.renderCreateAlbumForm = async (req, res) => {
 
     const id = req.query.id;
+    const artistId = req.query.artistId;
+
+    const artist = await prisma.artist.findUnique({
+        where: {
+            id: artistId
+        }
+    });
+
+    if (!artist) {
+        return res.redirect("/admin/artists");
+    }
 
     const album = await getAlbumById(id);
+
+    if (!album) {
+        return res.send("Album not found in MusicBrainz.");
+    }
+
     const genres = await prisma.genre.findMany({
         orderBy: {
             name: "asc"
-        },
-    })
-    const slug = album.name
+        }
+    });
+
+    const slug = album.title
         .toLowerCase()
         .replace(/\s+/g, "-");
 
-    res.render("admin/album/create", {
-        activePage: "album",
+    res.render("admin/albums/create", {
+        activePage: "albums",
         artist,
+        album,
         slug,
         genres
     });
-
 };
 exports.renderArtistSearch = (req, res) => {
     res.render("admin/artists/search", {
@@ -75,13 +92,15 @@ exports.searchArtist = async (req, res) => {
 };
 exports.searchAlbum = async (req, res) => {
     const query = req.query.q;
+    const artistId = req.query.artistId;
 
     const album = await searchAlbum(query);
     console.log(album);
-    res.render("admin/album/search", {
-        activePage: "album",
-        artists,
-        query
+    res.render("admin/albums/search", {
+        activePage: "artist",
+        albums,
+        query,
+        artistId
     });
 };
 exports.createArtist = async (req, res) => {
@@ -164,6 +183,84 @@ exports.createArtist = async (req, res) => {
     }
 
 };
+exports.createAlbum = async (req, res) => {
+
+    try {
+
+        const {
+
+            title,
+            slug,
+            songs,
+            musicBrainzId,
+            albumType,
+            coverImage,
+            genreIds,
+            releaseDate
+
+        } = req.body;
+
+        // Check duplicate
+        const existingAlbum = await prisma.album.findUnique({
+
+            where: {
+
+                musicBrainzId
+
+            }
+
+        });
+
+        if (existingAlbum) {
+
+            return res.send("Album already imported.");
+
+        }
+
+
+        console.log(req.body);
+        console.log(genreIds);
+        console.log(typeof genreIds);
+        console.log(Array.isArray(genreIds));
+        const genreArray = Array.isArray(genreIds)
+            ? genreIds
+            : genreIds
+                ? [genreIds]
+                : [];
+
+        console.log(genreArray);
+        await prisma.album.create({
+
+            data: {
+                title,
+                slug,
+                coverImage,
+                musicBrainzId,
+                songs,
+                albumType: mapAlbumType(albumType),
+
+            
+
+                genres: {
+                    connect: genreArray.map(id => ({
+                        id
+                    }))
+                }
+            }
+
+        });
+
+        res.redirect("/admin/album");
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.send("Something went wrong.");
+
+    }
+
+};
 exports.renderArtists = async (req, res) => {
     const artists = await prisma.artist.findMany({
         orderBy: {
@@ -174,6 +271,18 @@ exports.renderArtists = async (req, res) => {
     res.render("admin/artists/index", {
         activePage: "artists",
         artists
+    });
+};
+exports.renderAlbum = async (req, res) => {
+    const album = await prisma.album.findMany({
+        orderBy: {
+            title: "asc"
+        }
+    });
+
+    res.render("admin/albums/index", {
+        activePage: "artists",
+        album
     });
 };
 

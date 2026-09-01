@@ -17,8 +17,9 @@ router.get("/genres", renderGenre);
 router.get("/albums", renderAlbum);
 router.get("/songs", renderSong);
 router.get("/artists/:id/manage",renderManage)
-router.get("/albums/",searchAlbum)
-router.get("/album/new/",renderCreateAlbumForm)
+
+router.get("/albums/search",searchAlbum)
+router.get("/albums/create/",renderCreateAlbumForm)
 
 
 module.exports = router;
