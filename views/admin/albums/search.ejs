@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -43,14 +42,14 @@
             flex: 1;
             padding: 12px;
             border: none;
-            outline: none;
             border-radius: 8px;
             background: #2b2b2b;
             color: white;
             font-size: 16px;
         }
 
-        .search-form button {
+        .search-form button,
+        .select-btn {
             padding: 12px 22px;
             border: none;
             border-radius: 8px;
@@ -58,10 +57,6 @@
             color: #111;
             font-weight: bold;
             cursor: pointer;
-        }
-
-        .search-form button:hover {
-            background: #18a34a;
         }
 
         .results {
@@ -87,20 +82,6 @@
             margin: 5px 0;
         }
 
-        .album-card button {
-            padding: 10px 18px;
-            border: none;
-            border-radius: 8px;
-            background: #1DB954;
-            color: #111;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .album-card button:hover {
-            background: #18a34a;
-        }
-
         .empty-state {
             background: #242424;
             padding: 20px;
@@ -109,7 +90,6 @@
         }
 
     </style>
-
 </head>
 
 <body>
@@ -122,9 +102,12 @@
 
             <h1>Search Album</h1>
 
-            <form action="/admin/albums/search/results" method="GET" class="search-form">
+            <form
+                action="/admin/albums/search/results"
+                method="GET"
+                class="search-form"
+            >
 
-                <!-- Keeps your database artist ID -->
                 <input
                     type="hidden"
                     name="artistId"
@@ -139,7 +122,9 @@
                     required
                 >
 
-                <button type="submit">Search</button>
+                <button type="submit">
+                    Search
+                </button>
 
             </form>
 
@@ -161,30 +146,26 @@
 
                         <div>
 
-                            <h2><%= album.title %></h2>
+            <h2><%= album.title %></h2>
 
-                            <p>
-                                <strong>Type:</strong>
-                                <%= album["primary-type"] || "Unknown" %>
-                            </p>
+            <p>
+                <strong>Artist:</strong>
+                <%= album["artist-credit"]?.[0]?.name || "Unknown" %>
+            </p>
 
-                            <p>
-                                <strong>Release Date:</strong>
-                                <%= album["first-release-date"] || "Unknown" %>
-                            </p>
+            <p>
+                <strong>Date:</strong>
+                <%= album.date || "Unknown" %>
+            </p>
 
-                            <p>
-                                <strong>Score:</strong>
-                                <%= album.score %>
-                            </p>
-
-                        </div>
+        </div>
 
 
-                        <!-- Pass BOTH IDs -->
                         <a href="/admin/albums/create?id=<%= album.id %>&artistId=<%= artistId %>">
 
-                            <button>Select</button>
+                            <button class="select-btn">
+                                Select
+                            </button>
 
                         </a>
 
@@ -199,5 +180,4 @@
     </div>
 
 </body>
-
 </html>

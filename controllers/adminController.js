@@ -1,5 +1,5 @@
-const { searchArtists,searchAlbum } = require("../services/musicbrainzService");
-const { getAlbumById,getArtistById } = require("../services/musicbrainzService");
+const { searchArtists, searchAlbum: searchAlbumsFromMusicBrainz } = require("../services/musicbrainzService");
+const { getAlbumById, getArtistById } = require("../services/musicbrainzService");
 
 const prisma = require("../utils/prisma");
 const mapArtistType = require("../utils/mapArtistType");
@@ -91,15 +91,46 @@ exports.searchArtist = async (req, res) => {
     });
 };
 exports.searchAlbum = async (req, res) => {
-    const query = req.query.q;
+    try {
+        const query = req.query.q;
+        const artistId = req.query.artistId;
+
+        const artist = await prisma.artist.findUnique({
+            where: {
+                id: artistId
+            }
+        });
+
+        if (!artist) {
+            return res.send("Artist not found.");
+        }
+
+        const albums = await searchAlbumsFromMusicBrainz(
+            query,
+            artist.musicBrainzId
+        );
+
+        console.log("Albums:", albums);
+
+        res.render("admin/albums/search", {
+            activePage: "albums",
+            albums,
+            query,
+            artistId
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.send("Error while searching albums.");
+    }
+};
+exports.renderAlbumSearch = (req, res) => {
     const artistId = req.query.artistId;
 
-    const album = await searchAlbum(query);
-    console.log(album);
     res.render("admin/albums/search", {
         activePage: "artist",
-        albums,
-        query,
+        albums: [],
+        query: "",
         artistId
     });
 };
@@ -239,7 +270,7 @@ exports.createAlbum = async (req, res) => {
                 songs,
                 albumType: mapAlbumType(albumType),
 
-            
+
 
                 genres: {
                     connect: genreArray.map(id => ({

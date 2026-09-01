@@ -19,23 +19,24 @@ exports.searchArtists = async (query) => {
 
     return response.data.artists;
 }
-exports.searchAlbum = async (query) => {
-
+exports.searchAlbum = async (query, artistMusicBrainzId) => {
     const response = await axios.get(
         "https://musicbrainz.org/ws/2/release",
         {
-            params:{
-                query,
-                fmt:"json"
+            params: {
+                query: `release:${query} AND arid:${artistMusicBrainzId}`,
+                fmt: "json",
+                limit: 20
             },
-            headers:{
-                "User-Agent":"MusicExploration/1.0 (your@email.com)"
-            }
+            headers: {
+                "User-Agent": "MusicExploration/1.0 (your@email.com)"
+            },
+            timeout: 10000
         }
     );
 
-    return response.data.artists;
-}
+    return response.data.releases;
+};
 exports.getAlbumById = async (id) => {
     try {
 

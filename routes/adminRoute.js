@@ -1,7 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const { renderDashboard,renderArtists,updateArtist,renderCreateArtistForm, deleteArtist, renderEditArtistForm, renderArtistSearch, searchArtist, createArtist, renderGenre, renderAlbum, renderSong, renderManage, renderCreateAlbumForm } = require("../controllers/adminController");
-const { searchAlbum } = require("../services/musicbrainzService");
+const {
+    renderDashboard,
+    renderArtists,
+    updateArtist,
+    renderCreateArtistForm,
+    deleteArtist,
+    renderEditArtistForm,
+    renderArtistSearch,
+    searchArtist,
+    createArtist,
+    renderGenre,
+    renderAlbum,
+    renderSong,
+    renderManage,
+    renderCreateAlbumForm,
+    renderAlbumSearch,
+    searchAlbum
+} = require("../controllers/adminController");
 
 router.get("/", renderDashboard);
 router.get("/artists", renderArtists);
@@ -18,7 +34,8 @@ router.get("/albums", renderAlbum);
 router.get("/songs", renderSong);
 router.get("/artists/:id/manage",renderManage)
 
-router.get("/albums/search",searchAlbum)
+router.get("/albums/search",renderAlbumSearch)
+router.get("/albums/search/results",searchAlbum);
 router.get("/albums/create/",renderCreateAlbumForm)
 
 
