@@ -1,5 +1,6 @@
-const { searchArtists } = require("../services/musicbrainzService");
-const { getArtistById } = require("../services/musicbrainzService");
+const { searchArtists,searchAlbum } = require("../services/musicbrainzService");
+const { getAlbumById,getArtistById } = require("../services/musicbrainzService");
+
 const prisma = require("../utils/prisma");
 const mapArtistType = require("../utils/mapArtistType");
 exports.renderDashboard = (req, res) => {
@@ -32,6 +33,28 @@ exports.renderCreateArtistForm = async (req, res) => {
     });
 
 };
+exports.renderCreateAlbumForm = async (req, res) => {
+
+    const id = req.query.id;
+
+    const album = await getAlbumById(id);
+    const genres = await prisma.genre.findMany({
+        orderBy: {
+            name: "asc"
+        },
+    })
+    const slug = album.name
+        .toLowerCase()
+        .replace(/\s+/g, "-");
+
+    res.render("admin/album/create", {
+        activePage: "album",
+        artist,
+        slug,
+        genres
+    });
+
+};
 exports.renderArtistSearch = (req, res) => {
     res.render("admin/artists/search", {
         activePage: "artists",
@@ -46,6 +69,17 @@ exports.searchArtist = async (req, res) => {
     console.log(artists);
     res.render("admin/artists/search", {
         activePage: "artists",
+        artists,
+        query
+    });
+};
+exports.searchAlbum = async (req, res) => {
+    const query = req.query.q;
+
+    const album = await searchAlbum(query);
+    console.log(album);
+    res.render("admin/album/search", {
+        activePage: "album",
         artists,
         query
     });
@@ -147,18 +181,36 @@ exports.renderManage = async (req, res) => {
     const artist = await prisma.artist.findUnique({
         where: {
             id: req.params.id
+        },
+        include: {
+            primaryGenre: true,
+            genres: true,
+            albums: {
+                include: {
+                    artists: true,
+                    genres: true
+                }
+            },
+            songs: {
+                include: {
+                    artists: true,
+                    albums: true,
+                    genres: true
+                }
+            }
         }
     });
+
     if (!artist) {
         return res.redirect("/admin/artists");
     }
-    
-    res.render("admin/artists/edit", {
+
+    res.render("admin/artists/manage", {
         activePage: "artists",
-        manage
+        artist
     });
-    
-}
+};
+
 
 
 exports.renderEditArtistForm = async (req, res) => {
@@ -166,6 +218,9 @@ exports.renderEditArtistForm = async (req, res) => {
     const artist = await prisma.artist.findUnique({
         where: {
             id: req.params.id
+        },
+        include: {
+            genres: true
         }
     });
     const genres = await prisma.genre.findMany({
@@ -191,11 +246,22 @@ exports.updateArtist = async (req, res) => {
         const {
             name,
             slug,
+            biography,
             country,
+            spotifyId,
+            musicBrainzId,
+            profileImage,
+            bannerImage,
             type,
-            primaryGenreId
-
+            primaryGenreId,
+            genreIds
         } = req.body;
+
+        const genreArray = Array.isArray(genreIds)
+            ? genreIds
+            : genreIds
+                ? [genreIds]
+                : [];
 
         await prisma.artist.update({
 
@@ -207,14 +273,27 @@ exports.updateArtist = async (req, res) => {
 
                 name,
                 slug,
+                biography,
                 country,
+                spotifyId,
+                musicBrainzId,
+                profileImage,
+                bannerImage,
                 type: mapArtistType(type),
-                primaryGenre: {
-                    connect: {
-                        id: primaryGenreId
-                    }
-                }
 
+                primaryGenre: primaryGenreId
+                    ? {
+                        connect: {
+                            id: primaryGenreId
+                        }
+                    }
+                    : undefined,
+
+                genres: {
+                    set: genreArray.map(id => ({
+                        id
+                    }))
+                }
 
             }
 
@@ -226,6 +305,7 @@ exports.updateArtist = async (req, res) => {
 
         console.log(err);
         console.error(err);
+
         res.send("Something went wrong.");
 
     }
@@ -292,3 +372,4 @@ exports.renderSong = async (req, res) => {
         songs
     });
 };
+

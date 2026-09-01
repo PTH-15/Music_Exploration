@@ -163,34 +163,34 @@
 
                     <div class="form-group">
                         <label>Biography</label>
-                        <textarea name="biography" rows="6"></textarea>
+                        <textarea name="biography" rows="6"><%= artist.biography || '' %></textarea>
                     </div>
 
                     <div class="row">
 
                         <div class="form-group">
                             <label>Country</label>
-                            <input type="text"   name="country" value="<%= artist.area ? artist.area.name : '' %>">
+                            <input type="text"   name="country" value="<%= artist.country || '' %>">
                         </div>
 
                         <div class="form-group">
                             <label>Spotify ID</label>
-                            <input name="spotifyId" type="text">
+                            <input name="spotifyId" type="text" value="<%= artist.spotifyId || '' %>">
                         </div>
 
                     </div>
 
                     <div class="form-group">
                         <label>MusicBrainz ID</label>
-                        <input type="text" id="musicBrainzId" name="musicBrainzId" value="<%= artist.id %>" readonly>
+                        <input type="text" id="musicBrainzId" name="musicBrainzId" value="<%= artist.musicBrainzId  %>" readonly>
                     </div>
                     <div class="form-group">
                         <label>Profile Image URL</label>
-                        <input type="text"  name="profileimgurl" placeholder="Paste Profile img URL..">
+                        <input type="text" name="profileImage" value="<%= artist.profileImage || '' %>" placeholder="Paste Profile img URL..">
                     </div>
                     <div class="form-group">
                         <label>Baner Image URL</label>
-                        <input type="text" name="bannerimgurl" placeholder="Paste Banner img URL.." >
+                        <input type="text" name="bannerImage" value="<%= artist.bannerImage || '' %>" placeholder="Paste Banner img URL..">
                     </div>
                     <div class="form-group">
                         <label>Primary Genre</label>
@@ -209,7 +209,7 @@
                         <div class="genre-options">
                             <% genres.forEach(genre=> { %>
                                 <label class="genre-option">
-                                    <input type="checkbox" name="genreIds" value="<%= genre.id %>">
+                                    <input type="checkbox" name="genreIds" value="<%= genre.id %>" <%= artist.genres.some(g => g.id === genre.id) ? "checked" : "" %> >
                                     <span>
                                         <%= genre.name %>
                                     </span>

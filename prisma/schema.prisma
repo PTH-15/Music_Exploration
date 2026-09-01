@@ -93,6 +93,8 @@ model Artist {
   musicBrainzId  String     @unique
   name           String
   slug           String     @unique
+  biography      String?
+  spotifyId      String?  @unique
   profileImage   String?
   bannerImage    String?
   country        String?

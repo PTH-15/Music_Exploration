@@ -1,0 +1,881 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage <%= artist.name %></title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #181818;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            background: #181818;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: #b3b3b3;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            color: white;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .card {
+            background: #242424;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+        }
+
+        .section-description {
+            color: #b3b3b3;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        /* =========================
+           ARTIST INFO
+        ========================= */
+
+        .artist-info {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .artist-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #333;
+        }
+
+        .artist-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .artist-details h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .artist-details p {
+            color: #b3b3b3;
+            margin-bottom: 5px;
+        }
+
+        .artist-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .primary-btn {
+            background: #1DB954;
+            color: #111;
+        }
+
+        .primary-btn:hover {
+            background: #18a34a;
+        }
+
+        .secondary-btn {
+            background: #333;
+            color: white;
+        }
+
+        .secondary-btn:hover {
+            background: #444;
+        }
+
+        .danger-btn {
+            background: #3b1d1d;
+            color: #ff6b6b;
+        }
+
+        .danger-btn:hover {
+            background: #512424;
+        }
+
+        /* =========================
+           GENRES
+        ========================= */
+
+        .genre-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .genre-tag {
+            background: #333;
+            color: #ddd;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .primary-genre {
+            background: #1DB954;
+            color: #111;
+            font-weight: bold;
+        }
+
+        .empty-text {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* =========================
+           ALBUM GRID
+        ========================= */
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .album-card {
+            background: #2e2e2e;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: .2s ease;
+        }
+
+        .album-card:hover {
+            background: #363636;
+        }
+
+        .album-cover {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            display: block;
+            background: #333;
+        }
+
+        .album-cover-placeholder {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .album-body {
+            padding: 16px;
+        }
+
+        .album-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .album-meta {
+            color: #b3b3b3;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .album-type {
+            display: inline-block;
+            background: #1DB954;
+            color: #111;
+            padding: 5px 9px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .album-artists {
+            color: #ccc;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .album-genres {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .small-genre {
+            background: #444;
+            color: #ccc;
+            padding: 4px 7px;
+            border-radius: 5px;
+            font-size: 11px;
+        }
+
+        .album-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .album-actions .btn {
+            flex: 1;
+            padding: 9px 8px;
+            font-size: 12px;
+        }
+
+        /* =========================
+           SONG SECTION
+        ========================= */
+
+        .song-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .song-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #2e2e2e;
+            padding: 14px 16px;
+            border-radius: 8px;
+        }
+
+        .song-number {
+            width: 30px;
+            color: #777;
+            text-align: center;
+        }
+
+        .song-info {
+            flex: 1;
+        }
+
+        .song-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .song-meta {
+            color: #999;
+            font-size: 13px;
+        }
+
+        .song-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* =========================
+           EMPTY STATES
+        ========================= */
+
+        .empty-state {
+            background: #2e2e2e;
+            border-radius: 10px;
+            padding: 45px 20px;
+            text-align: center;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #999;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .content {
+                padding: 20px;
+            }
+
+            .page-header {
+                align-items: flex-start;
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .artist-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .album-grid {
+                grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <%- include("../partials/sidebar") %>
+
+        <main class="content">
+
+            <!-- =========================
+                 PAGE HEADER
+            ========================= -->
+
+            <div class="page-header">
+
+                <div>
+                    <h1>Manage Artist</h1>
+                </div>
+
+                <a href="/admin/artists" class="back-btn">
+                    ← Back to Artists
+                </a>
+
+            </div>
+
+
+            <!-- =========================
+                 ARTIST INFORMATION
+            ========================= -->
+
+            <section class="card">
+
+                <div class="artist-info">
+
+                    <% if (artist.profileImage) { %>
+
+                        <img
+                            src="<%= artist.profileImage %>"
+                            alt="<%= artist.name %>"
+                            class="artist-image"
+                        >
+
+                    <% } else { %>
+
+                        <div class="artist-placeholder">
+                            No Image
+                        </div>
+
+                    <% } %>
+
+
+                    <div class="artist-details">
+
+                        <h2>
+                            <%= artist.name %>
+                        </h2>
+
+                        <% if (artist.country) { %>
+
+                            <p>
+                                <%= artist.country %>
+                            </p>
+
+                        <% } %>
+
+                        <% if (artist.type) { %>
+
+                            <p>
+                                <%= artist.type %>
+                            </p>
+
+                        <% } %>
+
+
+                        <div class="artist-actions">
+
+                            <a
+                                href="/admin/artists/<%= artist.id %>/edit"
+                                class="btn secondary-btn"
+                            >
+                                Edit Artist
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 GENRES
+            ========================= -->
+
+            <section class="card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>Genres</h2>
+
+                        <p class="section-description">
+                            Genres associated with this artist.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="genre-list">
+
+                    <% if (artist.primaryGenre) { %>
+
+                        <span class="genre-tag primary-genre">
+                            <%= artist.primaryGenre.name %>
+                            · Primary
+                        </span>
+
+                    <% } %>
+
+
+                    <% if (artist.genres && artist.genres.length > 0) { %>
+
+                        <% artist.genres.forEach(genre => { %>
+
+                            <span class="genre-tag">
+                                <%= genre.name %>
+                            </span>
+
+                        <% }) %>
+
+                    <% } %>
+
+
+                    <% if (
+                        !artist.primaryGenre &&
+                        (!artist.genres || artist.genres.length === 0)
+                    ) { %>
+
+                        <span class="empty-text">
+                            No genres assigned.
+                        </span>
+
+                    <% } %>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 ALBUMS
+            ========================= -->
+
+            <section class="card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>Albums</h2>
+
+                        <p class="section-description">
+                            Albums associated with <%= artist.name %>.
+                        </p>
+
+                    </div>
+
+
+                    <!--
+                        This will point to the separate Album
+                        create page for this artist.
+                    -->
+
+                    <a
+                        href="/admin/albums/create?artistId=<%= artist.id %>"
+                        class="btn primary-btn"
+                    >
+                        + Add Album
+                    </a>
+
+                </div>
+
+
+                <% if (artist.albums && artist.albums.length > 0) { %>
+
+                    <div class="album-grid">
+
+                        <% artist.albums.forEach(album => { %>
+
+                            <article class="album-card">
+
+
+                                <!-- Album Cover -->
+
+                                <% if (album.coverImage) { %>
+
+                                    <img
+                                        src="<%= album.coverImage %>"
+                                        alt="<%= album.title %>"
+                                        class="album-cover"
+                                    >
+
+                                <% } else { %>
+
+                                    <div class="album-cover-placeholder">
+                                        No Cover
+                                    </div>
+
+                                <% } %>
+
+
+                                <div class="album-body">
+
+
+                                    <!-- Album Type -->
+
+                                    <% if (album.albumType) { %>
+
+                                        <span class="album-type">
+                                            <%= album.albumType %>
+                                        </span>
+
+                                    <% } %>
+
+
+                                    <!-- Album Title -->
+
+                                    <div class="album-title">
+
+                                        <%= album.title %>
+
+                                    </div>
+
+
+                                    <!-- Release Date -->
+
+                                    <% if (album.releaseDate) { %>
+
+                                        <div class="album-meta">
+
+                                            <%= new Date(album.releaseDate).getFullYear() %>
+
+                                        </div>
+
+                                    <% } %>
+
+
+                                    <!-- Artists -->
+
+                                    <% if (album.artists && album.artists.length > 0) { %>
+
+                                        <div class="album-artists">
+
+                                            <% album.artists.forEach((albumArtist, index) => { %>
+
+                                                <%= albumArtist.name %><%= index < album.artists.length - 1 ? ", " : "" %>
+
+                                            <% }) %>
+
+                                        </div>
+
+                                    <% } %>
+
+
+                                    <!-- Genres -->
+
+                                    <% if (album.genres && album.genres.length > 0) { %>
+
+                                        <div class="album-genres">
+
+                                            <% album.genres.forEach(genre => { %>
+
+                                                <span class="small-genre">
+                                                    <%= genre.name %>
+                                                </span>
+
+                                            <% }) %>
+
+                                        </div>
+
+                                    <% } %>
+
+
+                                    <!-- Album Actions -->
+
+                                    <div class="album-actions">
+
+                                        <a
+                                            href="/admin/albums/<%= album.id %>/edit"
+                                            class="btn secondary-btn"
+                                        >
+                                            Edit
+                                        </a>
+
+
+                                        <form
+                                            action="/admin/albums/<%= album.id %>/delete"
+                                            method="POST"
+                                            style="flex: 1;"
+                                            onsubmit="return confirm('Delete this album?');"
+                                        >
+
+                                            <button
+                                                type="submit"
+                                                class="btn danger-btn"
+                                                style="width: 100%;"
+                                            >
+                                                Delete
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        <% }) %>
+
+                    </div>
+
+                <% } else { %>
+
+                    <div class="empty-state">
+
+                        <h3>No Albums Yet</h3>
+
+                        <p>
+                            Add the first album for <%= artist.name %>.
+                        </p>
+
+                        <a
+                            href="/admin/albums/create?artistId=<%= artist.id %>"
+                            class="btn primary-btn"
+                        >
+                            + Add Album
+                        </a>
+
+                    </div>
+
+                <% } %>
+
+            </section>
+
+
+            
+
+            <section class="card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>Songs</h2>
+
+                        <p class="section-description">
+                            Songs associated with <%= artist.name %>.
+                        </p>
+
+                    </div>
+
+
+                    <!--
+                        Keep this button ready for the future
+                        Song CRUD flow.
+                    -->
+
+                    <a
+                        href="/admin/songs/create?artistId=<%= artist.id %>"
+                        class="btn primary-btn"
+                    >
+                        + Add Song
+                    </a>
+
+                </div>
+
+
+                <% if (artist.songs && artist.songs.length > 0) { %>
+
+                    <div class="song-list">
+
+                        <% artist.songs.forEach((song, index) => { %>
+
+                            <div class="song-row">
+
+                                <div class="song-number">
+                                    <%= index + 1 %>
+                                </div>
+
+
+                                <div class="song-info">
+
+                                    <div class="song-title">
+                                        <%= song.title %>
+                                    </div>
+
+
+                                    <div class="song-meta">
+
+                                        <% if (song.albums && song.albums.length > 0) { %>
+
+                                            <%= song.albums.map(album => album.title).join(", ") %>
+
+                                        <% } else { %>
+
+                                            No album
+
+                                        <% } %>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!--
+                                    These links are intentionally prepared
+                                    for the future Song CRUD.
+                                -->
+
+                                <div class="song-actions">
+
+                                    <a
+                                        href="/admin/songs/<%= song.id %>/edit"
+                                        class="btn secondary-btn"
+                                    >
+                                        Edit
+                                    </a>
+
+                                    <form
+                                        action="/admin/songs/<%= song.id %>/delete"
+                                        method="POST"
+                                        onsubmit="return confirm('Delete this song?');"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="btn danger-btn"
+                                        >
+                                            Delete
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        <% }) %>
+
+                    </div>
+
+                <% } else { %>
+
+                    <div class="empty-state">
+
+                        <h3>No Songs Yet</h3>
+
+                        <p>
+                            Songs will appear here once they are added.
+                        </p>
+
+                    </div>
+
+                <% } %>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
+```

@@ -19,7 +19,48 @@ exports.searchArtists = async (query) => {
 
     return response.data.artists;
 }
+exports.searchAlbum = async (query) => {
 
+    const response = await axios.get(
+        "https://musicbrainz.org/ws/2/release",
+        {
+            params:{
+                query,
+                fmt:"json"
+            },
+            headers:{
+                "User-Agent":"MusicExploration/1.0 (your@email.com)"
+            }
+        }
+    );
+
+    return response.data.artists;
+}
+exports.getAlbumById = async (id) => {
+    try {
+
+        const response = await axios.get(
+            `${BASE_URL}/release/${id}`,
+            {
+                params: {
+                    fmt: "json"
+                },
+                headers: {
+                    "User-Agent": "MusicExploration/1.0 (your-email@example.com)"
+                }
+            }
+        );
+
+        return response.data;
+
+    } catch (error) {
+
+        console.error(error.message);
+
+        return null;
+
+    }
+};
 exports.getArtistById = async (id) => {
     try {
 
