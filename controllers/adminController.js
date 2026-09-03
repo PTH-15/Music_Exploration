@@ -154,7 +154,7 @@ exports.createArtist = async (req, res) => {
         const existingArtist = await prisma.artist.findUnique({
 
             where: {
-
+ 
                 musicBrainzId
 
             }
@@ -281,7 +281,7 @@ exports.createAlbum = async (req, res) => {
 
         });
 
-        res.redirect("/admin/album");
+        res.redirect("/admin/artists");
 
     } catch (err) {
 
