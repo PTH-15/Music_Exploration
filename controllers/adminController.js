@@ -34,7 +34,6 @@ exports.renderCreateArtistForm = async (req, res) => {
 
 };
 exports.renderCreateAlbumForm = async (req, res) => {
-
     const id = req.query.id;
     const artistId = req.query.artistId;
 
@@ -215,62 +214,62 @@ exports.createArtist = async (req, res) => {
 
 };
 exports.createAlbum = async (req, res) => {
-
     try {
-
         const {
-
             title,
             slug,
-            songs,
             musicBrainzId,
             albumType,
             coverImage,
-            genreIds,
-            releaseDate
-
+            releaseDate,
+            artistId,
+            genreIds
         } = req.body;
 
-        // Check duplicate
         const existingAlbum = await prisma.album.findUnique({
-
             where: {
-
                 musicBrainzId
-
             }
-
         });
 
         if (existingAlbum) {
-
             return res.send("Album already imported.");
-
         }
 
+        const artist = await prisma.artist.findUnique({
+            where: {
+                id: artistId
+            }
+        });
 
-        console.log(req.body);
-        console.log(genreIds);
-        console.log(typeof genreIds);
-        console.log(Array.isArray(genreIds));
+        if (!artist) {
+            return res.send("Artist not found.");
+        }
+
         const genreArray = Array.isArray(genreIds)
             ? genreIds
             : genreIds
                 ? [genreIds]
                 : [];
 
-        console.log(genreArray);
         await prisma.album.create({
-
             data: {
                 title,
                 slug,
-                coverImage,
                 musicBrainzId,
-                songs,
+                coverImage,
+
+                releaseDate: releaseDate
+                    ? new Date(releaseDate)
+                    : null,
+
                 albumType: mapAlbumType(albumType),
 
-
+                artists: {
+                    connect: {
+                        id: artistId
+                    }
+                },
 
                 genres: {
                     connect: genreArray.map(id => ({
@@ -278,19 +277,14 @@ exports.createAlbum = async (req, res) => {
                     }))
                 }
             }
-
         });
 
-        res.redirect("/admin/artists");
+        res.redirect(`/admin/artists/${artistId}/manage`);
 
     } catch (err) {
-
-        console.log(err);
-
-        res.send("Something went wrong.");
-
+        console.error(err);
+        res.send("Something went wrong while creating the album.");
     }
-
 };
 exports.renderArtists = async (req, res) => {
     const artists = await prisma.artist.findMany({

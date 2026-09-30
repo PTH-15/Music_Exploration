@@ -31,14 +31,13 @@ router.get("/artists/:id/edit", renderEditArtistForm);
 router.post("/artists/:id", updateArtist);
 router.post("/artists/:id/delete", deleteArtist);
 router.get("/genres", renderGenre);
-router.get("/artists/:id/manage", renderAlbum);
 router.get("/songs", renderSong);
 router.get("/artists/:id/manage",renderManage)
 
-router.get("/albums/search",renderAlbumSearch)
-router.get("/albums/search/results",searchAlbum);
-router.get("/albums/create/",renderCreateAlbumForm)
-router.post("/artists/:id/manage", createAlbum);
 
-
+router.get("/albums", renderAlbum);
+router.get("/albums/search", renderAlbumSearch);
+router.get("/albums/search/results", searchAlbum);
+router.get("/albums/create", renderCreateAlbumForm);
+router.post("/albums", createAlbum);
 module.exports = router;

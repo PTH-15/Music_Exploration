@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Manage <%= artist.name %></title>
+    <title>Manage <%= artist.name %>
+    </title>
 
     <style>
         * {
@@ -405,311 +405,411 @@
 
         <%- include("../partials/sidebar") %>
 
-        <main class="content">
+            <main class="content">
 
-            <!-- =========================
+                <!-- =========================
                  PAGE HEADER
             ========================= -->
 
-            <div class="page-header">
-
-                <div>
-                    <h1>Manage Artist</h1>
-                </div>
-
-                <a href="/admin/artists" class="back-btn">
-                    ← Back to Artists
-                </a>
-
-            </div>
-
-
-            <!-- =========================
-                 ARTIST INFORMATION
-            ========================= -->
-
-            <section class="card">
-
-                <div class="artist-info">
-
-                    <% if (artist.profileImage) { %>
-
-                        <img
-                            src="<%= artist.profileImage %>"
-                            alt="<%= artist.name %>"
-                            class="artist-image"
-                        >
-
-                    <% } else { %>
-
-                        <div class="artist-placeholder">
-                            No Image
-                        </div>
-
-                    <% } %>
-
-
-                    <div class="artist-details">
-
-                        <h2>
-                            <%= artist.name %>
-                        </h2>
-
-                        <% if (artist.country) { %>
-
-                            <p>
-                                <%= artist.country %>
-                            </p>
-
-                        <% } %>
-
-                        <% if (artist.type) { %>
-
-                            <p>
-                                <%= artist.type %>
-                            </p>
-
-                        <% } %>
-
-
-                        <div class="artist-actions">
-
-                            <a
-                                href="/admin/artists/<%= artist.id %>/edit"
-                                class="btn secondary-btn"
-                            >
-                                Edit Artist
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =========================
-                 GENRES
-            ========================= -->
-
-            <section class="card">
-
-                <div class="section-header">
+                <div class="page-header">
 
                     <div>
-
-                        <h2>Genres</h2>
-
-                        <p class="section-description">
-                            Genres associated with this artist.
-                        </p>
-
+                        <h1>Manage Artist</h1>
                     </div>
 
-                </div>
-
-
-                <div class="genre-list">
-
-                    <% if (artist.primaryGenre) { %>
-
-                        <span class="genre-tag primary-genre">
-                            <%= artist.primaryGenre.name %>
-                            · Primary
-                        </span>
-
-                    <% } %>
-
-
-                    <% if (artist.genres && artist.genres.length > 0) { %>
-
-                        <% artist.genres.forEach(genre => { %>
-
-                            <span class="genre-tag">
-                                <%= genre.name %>
-                            </span>
-
-                        <% }) %>
-
-                    <% } %>
-
-
-                    <% if (
-                        !artist.primaryGenre &&
-                        (!artist.genres || artist.genres.length === 0)
-                    ) { %>
-
-                        <span class="empty-text">
-                            No genres assigned.
-                        </span>
-
-                    <% } %>
-
-                </div>
-
-            </section>
-
-
-            <!-- =========================
-                 ALBUMS
-            ========================= -->
-
-            <section class="card">
-
-                <div class="section-header">
-
-                    <div>
-
-                        <h2>Albums</h2>
-
-                        <p class="section-description">
-                            Albums associated with <%= artist.name %>.
-                        </p>
-
-                    </div>
-
-
-                    <!--
-                        This will point to the separate Album
-                        create page for this artist.
-                    -->
-
-                    <a
-                        href="/admin/albums/search?artistId=<%= artist.id %>"
-                        class="btn primary-btn"
-                    >
-                        + Add Album
+                    <a href="/admin/artists" class="back-btn">
+                        ← Back to Artists
                     </a>
 
                 </div>
 
 
-                <% if (artist.albums && artist.albums.length > 0) { %>
+                <!-- =========================
+                 ARTIST INFORMATION
+            ========================= -->
 
-                    <div class="album-grid">
+                <section class="card">
 
-                        <% artist.albums.forEach(album => { %>
+                    <div class="artist-info">
 
-                            <article class="album-card">
+                        <% if (artist.profileImage) { %>
 
+                            <img src="<%= artist.profileImage %>" alt="<%= artist.name %>" class="artist-image">
 
-                                <!-- Album Cover -->
+                            <% } else { %>
 
-                                <% if (album.coverImage) { %>
-
-                                    <img
-                                        src="<%= album.coverImage %>"
-                                        alt="<%= album.title %>"
-                                        class="album-cover"
-                                    >
-
-                                <% } else { %>
-
-                                    <div class="album-cover-placeholder">
-                                        No Cover
-                                    </div>
+                                <div class="artist-placeholder">
+                                    No Image
+                                </div>
 
                                 <% } %>
 
 
-                                <div class="album-body">
+                                    <div class="artist-details">
+
+                                        <h2>
+                                            <%= artist.name %>
+                                        </h2>
+
+                                        <% if (artist.country) { %>
+
+                                            <p>
+                                                <%= artist.country %>
+                                            </p>
+
+                                            <% } %>
+
+                                                <% if (artist.type) { %>
+
+                                                    <p>
+                                                        <%= artist.type %>
+                                                    </p>
+
+                                                    <% } %>
 
 
-                                    <!-- Album Type -->
+                                                        <div class="artist-actions">
 
-                                    <% if (album.albumType) { %>
+                                                            <a href="/admin/artists/<%= artist.id %>/edit"
+                                                                class="btn secondary-btn">
+                                                                Edit Artist
+                                                            </a>
 
-                                        <span class="album-type">
-                                            <%= album.albumType %>
+                                                        </div>
+
+                                    </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                 GENRES
+            ========================= -->
+
+                <section class="card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <h2>Genres</h2>
+
+                            <p class="section-description">
+                                Genres associated with this artist.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="genre-list">
+
+                        <% if (artist.primaryGenre) { %>
+
+                            <span class="genre-tag primary-genre">
+                                <%= artist.primaryGenre.name %>
+                                    · Primary
+                            </span>
+
+                            <% } %>
+
+
+                                <% if (artist.genres && artist.genres.length> 0) { %>
+
+                                    <% artist.genres.forEach(genre=> { %>
+
+                                        <span class="genre-tag">
+                                            <%= genre.name %>
                                         </span>
 
-                                    <% } %>
+                                        <% }) %>
+
+                                            <% } %>
 
 
-                                    <!-- Album Title -->
+                                                <% if ( !artist.primaryGenre && (!artist.genres ||
+                                                    artist.genres.length===0) ) { %>
 
-                                    <div class="album-title">
+                                                    <span class="empty-text">
+                                                        No genres assigned.
+                                                    </span>
 
-                                        <%= album.title %>
+                                                    <% } %>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                 ALBUMS
+            ========================= -->
+
+                <section class="card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <h2>Albums</h2>
+
+                            <p class="section-description">
+                                Albums associated with <%= artist.name %>.
+                            </p>
+
+                        </div>
+
+
+                        <!--
+                        This will point to the separate Album
+                        create page for this artist.
+                    -->
+
+                        <a href="/admin/albums/search?artistId=<%= artist.id %>" class="btn primary-btn">
+                            + Add Album
+                        </a>
+
+                    </div>
+
+
+                    <% if (artist.albums && artist.albums.length> 0) { %>
+
+                        <div class="album-grid">
+
+                            <% artist.albums.forEach(album=> { %>
+
+                                <article class="album-card">
+
+
+                                    <!-- Album Cover -->
+
+                                    <% if (album.coverImage) { %>
+
+                                        <img src="<%= album.coverImage %>" alt="<%= album.title %>" class="album-cover">
+
+                                        <% } else { %>
+
+                                            <div class="album-cover-placeholder">
+                                                No Cover
+                                            </div>
+
+                                            <% } %>
+
+
+                                                <div class="album-body">
+
+
+                                                    <!-- Album Type -->
+
+                                                    <% if (album.albumType) { %>
+
+                                                        <span class="album-type">
+                                                            <%= album.albumType %>
+                                                        </span>
+
+                                                        <% } %>
+
+
+                                                            <!-- Album Title -->
+
+                                                            <div class="album-title">
+
+                                                                <%= album.title %>
+
+                                                            </div>
+
+
+                                                            <!-- Release Date -->
+
+                                                            <% if (album.releaseDate) { %>
+
+                                                                <div class="album-meta">
+
+                                                                    <%= new Date(album.releaseDate).getFullYear() %>
+
+                                                                </div>
+
+                                                                <% } %>
+
+
+                                                                    <!-- Artists -->
+
+                                                                    <% if (album.artists && album.artists.length> 0) {
+                                                                        %>
+
+                                                                        <div class="album-artists">
+
+                                                                            <% album.artists.forEach((albumArtist,
+                                                                                index)=> { %>
+
+                                                                                <%= albumArtist.name %>
+                                                                                    <%= index < album.artists.length - 1
+                                                                                        ? ", " : "" %>
+
+                                                                                        <% }) %>
+
+                                                                        </div>
+
+                                                                        <% } %>
+
+
+                                                                            <!-- Genres -->
+
+                                                                            <% if (album.genres && album.genres.length>
+                                                                                0) { %>
+
+                                                                                <div class="album-genres">
+
+                                                                                    <% album.genres.forEach(genre=> { %>
+
+                                                                                        <span class="small-genre">
+                                                                                            <%= genre.name %>
+                                                                                        </span>
+
+                                                                                        <% }) %>
+
+                                                                                </div>
+
+                                                                                <% } %>
+
+
+                                                                                    <!-- Album Actions -->
+
+                                                                                    <div class="artist-actions">
+
+
+                                                                                        href="/admin/artists/<%=
+                                                                                            artist.id %>/edit"
+                                                                                            class="btn secondary-btn"
+                                                                                            >
+                                                                                            Edit Album
+                                                                                            </a>
+
+                                                                                            <form
+                                                                                                action="/admin/artists/<%= artist.id %>/delete"
+                                                                                                method="POST"
+                                                                                                onsubmit="return confirm('Delete this album? This cannot be undone.');">
+                                                                                                <button type="submit"
+                                                                                                    class="btn danger-btn">
+                                                                                                    Delete Artist
+                                                                                                </button>
+                                                                                            </form>
+
+                                                                                    </div>
+
+                                                </div>
+
+                                </article>
+
+                                <% }) %>
+
+                        </div>
+
+                        <% } else { %>
+
+                            <div class="empty-state">
+
+                                <h3>No Albums Yet</h3>
+
+                                <p>
+                                    Add the first album for <%= artist.name %>.
+                                </p>
+
+                                <a href="/admin/albums/search?artistId=<%= artist.id %>" class="btn primary-btn">
+                                    + Add Album
+                                </a>
+
+                            </div>
+
+                            <% } %>
+
+                </section>
+
+
+
+
+                <section class="card">
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <h2>Songs</h2>
+
+                            <p class="section-description">
+                                Songs associated with <%= artist.name %>.
+                            </p>
+
+                        </div>
+
+
+                        <!--
+                        Keep this button ready for the future
+                        Song CRUD flow.
+                    -->
+
+                        <a href="/admin/songs/create?artistId=<%= artist.id %>" class="btn primary-btn">
+                            + Add Song
+                        </a>
+
+                    </div>
+
+
+                    <% if (artist.songs && artist.songs.length> 0) { %>
+
+                        <div class="song-list">
+
+                            <% artist.songs.forEach((song, index)=> { %>
+
+                                <div class="song-row">
+
+                                    <div class="song-number">
+                                        <%= index + 1 %>
+                                    </div>
+
+
+                                    <div class="song-info">
+
+                                        <div class="song-title">
+                                            <%= song.title %>
+                                        </div>
+
+
+                                        <div class="song-meta">
+
+                                            <% if (song.albums && song.albums.length> 0) { %>
+
+                                                <%= song.albums.map(album=> album.title).join(", ") %>
+
+                                                    <% } else { %>
+
+                                                        No album
+
+                                                        <% } %>
+
+                                        </div>
 
                                     </div>
 
 
-                                    <!-- Release Date -->
+                                    <!--
+                                    These links are intentionally prepared
+                                    for the future Song CRUD.
+                                -->
 
-                                    <% if (album.releaseDate) { %>
+                                    <div class="song-actions">
 
-                                        <div class="album-meta">
-
-                                            <%= new Date(album.releaseDate).getFullYear() %>
-
-                                        </div>
-
-                                    <% } %>
-
-
-                                    <!-- Artists -->
-
-                                    <% if (album.artists && album.artists.length > 0) { %>
-
-                                        <div class="album-artists">
-
-                                            <% album.artists.forEach((albumArtist, index) => { %>
-
-                                                <%= albumArtist.name %><%= index < album.artists.length - 1 ? ", " : "" %>
-
-                                            <% }) %>
-
-                                        </div>
-
-                                    <% } %>
-
-
-                                    <!-- Genres -->
-
-                                    <% if (album.genres && album.genres.length > 0) { %>
-
-                                        <div class="album-genres">
-
-                                            <% album.genres.forEach(genre => { %>
-
-                                                <span class="small-genre">
-                                                    <%= genre.name %>
-                                                </span>
-
-                                            <% }) %>
-
-                                        </div>
-
-                                    <% } %>
-
-
-                                    <!-- Album Actions -->
-
-                                    <div class="album-actions">
-
-                                        <a
-                                            href="/admin/albums/<%= album.id %>/edit"
-                                            class="btn secondary-btn"
-                                        >
+                                        <a href="/admin/songs/<%= song.id %>/edit" class="btn secondary-btn">
                                             Edit
                                         </a>
 
+                                        <form action="/admin/songs/<%= song.id %>/delete" method="POST"
+                                            onsubmit="return confirm('Delete this song?');">
 
-                                        <form
-                                            action="/admin/albums/<%= album.id %>/delete"
-                                            method="POST"
-                                            style="flex: 1;"
-                                            onsubmit="return confirm('Delete this album?');"
-                                        >
-
-                                            <button
-                                                type="submit"
-                                                class="btn danger-btn"
-                                                style="width: 100%;"
-                                            >
+                                            <button type="submit" class="btn danger-btn">
                                                 Delete
                                             </button>
 
@@ -719,159 +819,27 @@
 
                                 </div>
 
-                            </article>
+                                <% }) %>
 
-                        <% }) %>
+                        </div>
 
-                    </div>
+                        <% } else { %>
 
-                <% } else { %>
+                            <div class="empty-state">
 
-                    <div class="empty-state">
+                                <h3>No Songs Yet</h3>
 
-                        <h3>No Albums Yet</h3>
-
-                        <p>
-                            Add the first album for <%= artist.name %>.
-                        </p>
-
-                        <a
-                            href="/admin/albums/search?artistId=<%= artist.id %>"
-                            class="btn primary-btn"
-                        >
-                            + Add Album
-                        </a>
-
-                    </div>
-
-                <% } %>
-
-            </section>
-
-
-            
-
-            <section class="card">
-
-                <div class="section-header">
-
-                    <div>
-
-                        <h2>Songs</h2>
-
-                        <p class="section-description">
-                            Songs associated with <%= artist.name %>.
-                        </p>
-
-                    </div>
-
-
-                    <!--
-                        Keep this button ready for the future
-                        Song CRUD flow.
-                    -->
-
-                    <a
-                        href="/admin/songs/create?artistId=<%= artist.id %>"
-                        class="btn primary-btn"
-                    >
-                        + Add Song
-                    </a>
-
-                </div>
-
-
-                <% if (artist.songs && artist.songs.length > 0) { %>
-
-                    <div class="song-list">
-
-                        <% artist.songs.forEach((song, index) => { %>
-
-                            <div class="song-row">
-
-                                <div class="song-number">
-                                    <%= index + 1 %>
-                                </div>
-
-
-                                <div class="song-info">
-
-                                    <div class="song-title">
-                                        <%= song.title %>
-                                    </div>
-
-
-                                    <div class="song-meta">
-
-                                        <% if (song.albums && song.albums.length > 0) { %>
-
-                                            <%= song.albums.map(album => album.title).join(", ") %>
-
-                                        <% } else { %>
-
-                                            No album
-
-                                        <% } %>
-
-                                    </div>
-
-                                </div>
-
-
-                                <!--
-                                    These links are intentionally prepared
-                                    for the future Song CRUD.
-                                -->
-
-                                <div class="song-actions">
-
-                                    <a
-                                        href="/admin/songs/<%= song.id %>/edit"
-                                        class="btn secondary-btn"
-                                    >
-                                        Edit
-                                    </a>
-
-                                    <form
-                                        action="/admin/songs/<%= song.id %>/delete"
-                                        method="POST"
-                                        onsubmit="return confirm('Delete this song?');"
-                                    >
-
-                                        <button
-                                            type="submit"
-                                            class="btn danger-btn"
-                                        >
-                                            Delete
-                                        </button>
-
-                                    </form>
-
-                                </div>
+                                <p>
+                                    Songs will appear here once they are added.
+                                </p>
 
                             </div>
 
-                        <% }) %>
+                            <% } %>
 
-                    </div>
+                </section>
 
-                <% } else { %>
-
-                    <div class="empty-state">
-
-                        <h3>No Songs Yet</h3>
-
-                        <p>
-                            Songs will appear here once they are added.
-                        </p>
-
-                    </div>
-
-                <% } %>
-
-            </section>
-
-        </main>
+            </main>
 
     </div>
 
